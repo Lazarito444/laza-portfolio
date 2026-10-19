@@ -1,0 +1,56 @@
+---
+import { en } from "../data/i18n";
+import { SOCIAL } from "../data/socials";
+
+const t = en;
+const year = new Date().getFullYear();
+const navItems = [
+  ["#hero", "00", "nav.hero"],
+  ["#about", "01", "nav.about"],
+  ["#projects", "02", "nav.projects"],
+  ["#stack", "03", "nav.stack"],
+  ["#experience", "04", "nav.experience"],
+  ["#code", "05", "nav.code"],
+  ["#contact", "06", "nav.contact"],
+] as const;
+---
+
+<footer data-od-id="site-footer">
+  <div class="wrap">
+    <div class="f-grid">
+      <div class="f-brand" data-od-id="footer-brand">
+        <div class="f-row">
+          <span class="f-badge" aria-hidden="true">L_</span>
+          <span>
+            <b class="font-display">lazarito.dev</b><br />
+            <span class="mono small muted">~/full-stack — dotnet · go · angular · flutter · cloud</span>
+          </span>
+        </div>
+        <span class="pill pill-live" data-i18n="footer.status" data-od-id="footer-status">{t("footer.status")}</span>
+        <span class="mono small muted" data-i18n="footer.note">{t("footer.note")}</span>
+      </div>
+
+      <div class="f-col" data-od-id="footer-nav">
+        <h3 data-i18n="footer.sitemap">{t("footer.sitemap")}</h3>
+        {navItems.map(([href, num, key]) => (
+          <a href={href}>{num} <span data-i18n={key}>{t(key)}</span></a>
+        ))}
+      </div>
+
+      <div class="f-col" data-od-id="footer-socials">
+        <h3 data-i18n="footer.elsewhere">{t("footer.elsewhere")}</h3>
+        <a href={SOCIAL.github} target="_blank" rel="noopener">GitHub ↗</a>
+        <a href={SOCIAL.linkedin} target="_blank" rel="noopener">LinkedIn ↗</a>
+        <a href="mailto:ariellazaro444@gmail.com">ariellazaro444@gmail.com</a>
+      </div>
+
+      <div class="f-top">
+        <a class="f-top-btn" href="#hero" data-i18n-aria="footer.top" aria-label={t("footer.top")} data-od-id="footer-top">↑</a>
+        <span class="mono small muted" id="footTime">--:--</span>
+      </div>
+    </div>
+
+    <div class="foot"><span class="mono small muted">© <span id="year">{year}</span> Ariel Lázaro</span></div>
+    <div class="giant" aria-hidden="true">FULL<b>—</b>STACK*</div>
+  </div>
+</footer>

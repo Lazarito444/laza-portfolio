@@ -1,0 +1,59 @@
+---
+import { en } from "../data/i18n";
+
+const t = en;
+---
+
+<section class="sec" id="experience">
+  <div class="sec-top">
+    <div data-od-id="experience-heading">
+      <span class="eyebrow" data-i18n="exp.eyebrow">{t("exp.eyebrow")}</span>
+      <h2><span data-i18n="exp.h2a">{t("exp.h2a")}</span> <em data-i18n="exp.h2b">{t("exp.h2b")}</em></h2>
+      <p data-i18n="exp.blurb">{t("exp.blurb")}</p>
+    </div>
+    <a
+      class="link-btn"
+      href="/cv/Resume_Ariel_Lazaro_FullStack.pdf"
+      download
+      data-href-en="/cv/Resume_Ariel_Lazaro_FullStack.pdf"
+      data-href-es="/cv/CV_Ariel_Lazaro_FullStack.pdf"
+      data-i18n="exp.cv"
+    >{t("exp.cv")}</a>
+  </div>
+
+  <div class="gitlog" data-od-id="career-log">
+    <header>$ git log --career --oneline</header>
+
+    <div class="commit" data-od-id="exp-senior">
+      <span class="hash">a3f9c21</span>
+      <span class="date" data-i18n="exp.c1.date">{t("exp.c1.date")}</span>
+      <div>
+        <b data-i18n="exp.c1.role">{t("exp.c1.role")}</b> <span data-i18n="exp.c1.rest">{t("exp.c1.rest")}</span>
+        <ul>
+          <li data-i18n="exp.c1.li1">{t("exp.c1.li1")}</li>
+          <li data-i18n="exp.c1.li2">{t("exp.c1.li2")}</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="commit" data-od-id="exp-mid">
+      <span class="hash">7be12d0</span>
+      <span class="date" data-i18n="exp.c2.date">{t("exp.c2.date")}</span>
+      <div>
+        <b data-i18n="exp.c2.role">{t("exp.c2.role")}</b> <span data-i18n="exp.c2.rest">{t("exp.c2.rest")}</span>
+        <ul>
+          <li data-i18n="exp.c2.li1">{t("exp.c2.li1")}</li>
+          <li data-i18n="exp.c2.li2">{t("exp.c2.li2")}</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="commit" data-od-id="exp-booking">
+      <span class="hash">9c1a004</span>
+      <span class="date" data-i18n="exp.c3.date">{t("exp.c3.date")}</span>
+      <div>
+        <b class="text-accent" data-i18n="exp.c3.role">{t("exp.c3.role")}</b> <span data-i18n="exp.c3.rest">{t("exp.c3.rest")}</span>
+      </div>
+    </div>
+  </div>
+</section>

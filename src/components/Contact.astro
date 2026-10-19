@@ -1,0 +1,66 @@
+---
+import { en } from "../data/i18n";
+import { SOCIAL } from "../data/socials";
+
+const t = en;
+const typeOptions = ["form.o1", "form.o2", "form.o3", "form.o4", "form.o5"] as const;
+---
+
+<section class="sec" id="contact">
+  <div class="sec-top">
+    <div data-od-id="contact-heading">
+      <span class="eyebrow" data-i18n="contact.eyebrow">{t("contact.eyebrow")}</span>
+      <h2><span data-i18n="contact.h2a">{t("contact.h2a")}</span> <em data-i18n="contact.h2b">{t("contact.h2b")}</em></h2>
+      <p data-i18n="contact.blurb">{t("contact.blurb")}</p>
+    </div>
+  </div>
+
+  <div class="issue-grid">
+    <form class="form" id="contactForm" novalidate data-od-id="contact-form">
+      <label for="fName">
+        <span data-i18n="form.name">{t("form.name")}</span>
+        <input id="fName" name="name" autocomplete="name" placeholder="Ada Lovelace" aria-describedby="eName" data-od-id="field-name" />
+        <span class="err" id="eName" data-i18n="form.nameErr">{t("form.nameErr")}</span>
+      </label>
+
+      <label for="fEmail">
+        <span data-i18n="form.email">{t("form.email")}</span>
+        <input id="fEmail" name="email" type="email" inputmode="email" autocomplete="email" placeholder="ada@company.com" aria-describedby="eEmail" data-od-id="field-email" />
+        <span class="err" id="eEmail" data-i18n="form.emailErr">{t("form.emailErr")}</span>
+      </label>
+
+      <label for="fType">
+        <span data-i18n="form.type">{t("form.type")}</span>
+        <select id="fType" name="type" data-od-id="field-type">
+          {typeOptions.map((key) => <option data-i18n={key}>{t(key)}</option>)}
+        </select>
+      </label>
+
+      <label for="fMsg">
+        <span data-i18n="form.msg">{t("form.msg")}</span>
+        <textarea id="fMsg" name="message" placeholder="What? Stack today? Ship date?" data-i18n-ph="form.phMsg" aria-describedby="eMsg" data-od-id="field-message"></textarea>
+        <span class="err" id="eMsg" data-i18n="form.msgErr">{t("form.msgErr")}</span>
+      </label>
+
+      <p class="sr" id="formStatus" role="status" aria-live="polite"></p>
+      <div class="form-ok" id="formOk" role="status" data-i18n="form.ok" data-od-id="form-success">{t("form.ok")}</div>
+      <button class="btn btn-lime w-full" type="submit" data-i18n="form.send" data-od-id="form-submit">{t("form.send")}</button>
+    </form>
+
+    <div class="preview" data-od-id="issue-preview-wrap">
+      <span class="eyebrow" data-i18n="form.pvTitle">{t("form.pvTitle")}</span>
+      <div class="issue mt-3 rounded-xl p-4" data-od-id="issue-preview">
+        <span class="pill" id="pvLabel">full-slice: api + web + mobile</span>
+        <h3 id="pvTitle" class="my-2">Message from Ada Lovelace</h3>
+        <p id="pvBody" class="muted text-[13.5px]">What? Stack today? Ship date? — type left, watch it render here.</p>
+        <div class="meta">
+          <a href="mailto:ariellazaro444@gmail.com">ariellazaro444@gmail.com</a>
+          <span aria-hidden="true">·</span>
+          <button class="copy-btn m-0 min-h-8 px-2.5 py-1.5" id="copyBtn2" type="button" data-copy-key="form.copy" data-i18n="form.copy" data-od-id="contact-copy-btn">{t("form.copy")}</button>
+          <span aria-hidden="true">·</span>
+          <a href={SOCIAL.linkedin} target="_blank" rel="noopener" data-od-id="contact-linkedin">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,34 @@
+---
+import { en } from "../data/i18n";
+
+const t = en;
+const sections = [
+  ["00", "hero", "rail.00"],
+  ["01", "about", "rail.01"],
+  ["02", "projects", "rail.02"],
+  ["03", "stack", "rail.03"],
+  ["04", "experience", "rail.04"],
+  ["05", "code", "rail.05"],
+  ["06", "contact", "rail.06"],
+] as const;
+---
+
+<nav class="rail" data-i18n-aria="railcard.index" aria-label={t("railcard.index")}>
+  <ul id="railNav" data-od-id="rail-index">
+    {sections.map(([num, id, key], i) => (
+      <li>
+        <a href={`#${id}`} class={i === 0 ? "active" : undefined} aria-current={i === 0 ? "true" : undefined}>
+          <span>{num}</span> <span data-i18n={key}>{t(key)}</span>
+        </a>
+      </li>
+    ))}
+  </ul>
+  <div class="rail-card" data-od-id="rail-status">
+    <strong class="mono text-accent text-xs" data-i18n="railcard.status">{t("railcard.status")}</strong><br />
+    <span class="muted">
+      <span data-i18n="railcard.l2a">{t("railcard.l2a")}</span><br />
+      <span data-i18n="railcard.l2b">{t("railcard.l2b")}</span><br /><br />
+      <a href="mailto:ariellazaro444@gmail.com">ariellazaro444@gmail.com</a>
+    </span>
+  </div>
+</nav>

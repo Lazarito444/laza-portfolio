@@ -1,0 +1,70 @@
+---
+import { en } from "../data/i18n";
+import { projects } from "../data/projects";
+
+const t = en;
+const filters = ["all", "backend", "frontend", "mobile", "cloud"] as const;
+const filterKey = (f: string) => `projects.f${f.charAt(0).toUpperCase()}${f.slice(1)}`;
+---
+
+<section class="sec" id="projects">
+  <div class="sec-top">
+    <div data-od-id="work-heading">
+      <span class="eyebrow" data-i18n="projects.eyebrow">{t("projects.eyebrow")}</span>
+      <h2><span data-i18n="projects.h2a">{t("projects.h2a")}</span> <em data-i18n="projects.h2b">{t("projects.h2b")}</em></h2>
+      <p data-i18n="projects.blurb">{t("projects.blurb")}</p>
+    </div>
+
+    <div class="filters" role="group" data-i18n-aria="projects.filters" aria-label={t("projects.filters")} data-od-id="work-filters">
+      {filters.map((f, i) => (
+        <button
+          class="filter-btn"
+          type="button"
+          aria-pressed={i === 0 ? "true" : "false"}
+          data-filter={f}
+          data-i18n={filterKey(f)}
+          data-od-id={`filter-${f}`}
+        >
+          {t(filterKey(f))}
+        </button>
+      ))}
+    </div>
+  </div>
+
+  <div id="workGrid">
+    {projects.map((p) => (
+      <article class:list={["case", p.featured ? "case-featured" : "case-row", "reveal"]} data-lanes={p.lanes} data-od-id={p.id}>
+        {p.num ? <div class="case-num" aria-hidden="true">{p.num}</div> : null}
+
+        <div class="case-main">
+          <span class:list={["pill", p.live && "pill-live"]} data-i18n={p.pillKey}>{t(p.pillKey)}</span>
+          <h3 data-i18n={p.titleKey}>{t(p.titleKey)}</h3>
+          <p class="muted" data-i18n={p.descKey}>{t(p.descKey)}</p>
+
+          <div class="tagrow">
+            {p.tags.map((tag) => <span class="pill">{tag}</span>)}
+          </div>
+
+          <p class={p.featured ? "mt-3" : "mt-2.5"}>
+            <a class="link-btn" href="#contact" data-i18n={p.linkKey} data-od-id={`${p.id}-case`}>{t(p.linkKey)}</a>
+          </p>
+        </div>
+
+        <div class="case-side">
+          {p.sideFile ? <div>{p.sideFile}</div> : null}
+          <div class="shot" set:html={p.shot.join("<br/>")} />
+          {p.noteKey ? <div class="muted" data-i18n={p.noteKey}>{t(p.noteKey)}</div> : null}
+        </div>
+      </article>
+    ))}
+  </div>
+
+  <p class="empty" id="workEmpty" hidden data-i18n="projects.empty">{t("projects.empty")}</p>
+  <p
+    class="mono small muted mt-2.5"
+    id="workCount"
+    role="status"
+    aria-live="polite"
+    data-od-id="work-count"
+  >{t("projects.count").replace("{n}", String(projects.length)).replace("{m}", String(projects.length))}</p>
+</section>

@@ -1,0 +1,61 @@
+---
+import { en } from "../data/i18n";
+import { SOCIAL } from "../data/socials";
+
+const t = en;
+---
+
+<section class="sec" id="about">
+  <div class="sec-top">
+    <div data-od-id="about-heading">
+      <span class="eyebrow" data-i18n="about.eyebrow">{t("about.eyebrow")}</span>
+      <h2><span data-i18n="about.h2a">{t("about.h2a")}</span> <em data-i18n="about.h2b">{t("about.h2b")}</em></h2>
+    </div>
+  </div>
+
+  <div class="about-grid">
+    <div class="id-card reveal" data-od-id="about-card">
+      <div class="id-top">
+        <div class="id-row">
+          <div class="id-text">
+            <span class="mono small" data-i18n="about.idbadge">{t("about.idbadge")}</span>
+            <b>Ariel Lázaro</b>
+            <span class="mono small" data-i18n="about.loc">{t("about.loc")}</span>
+          </div>
+          <div class="id-photo" data-od-id="about-photo" role="img" aria-label="Portrait of Ariel Lázaro">
+            <span class="id-ph-glyph" aria-hidden="true">L_</span>
+            <!-- Fallback: guarantees the placeholder shows even if the image
+                 404s before app.ts attaches its error listener. -->
+            <img id="photoImg" src="assets/photo.jpg" alt="" onerror="this.style.display = 'none'" />
+          </div>
+        </div>
+      </div>
+      <div class="id-body">
+        <div><span class="muted" data-i18n="about.f1k">{t("about.f1k")}</span><b data-i18n="about.f1v">{t("about.f1v")}</b></div>
+        <div><span class="muted" data-i18n="about.f2k">{t("about.f2k")}</span><b data-i18n="about.f2v">{t("about.f2v")}</b></div>
+        <div><span class="muted" data-i18n="about.f3k">{t("about.f3k")}</span><b data-i18n="about.f3v">{t("about.f3v")}</b></div>
+        <div><span class="muted" data-i18n="about.f4k">{t("about.f4k")}</span><b data-i18n="about.f4v">{t("about.f4v")}</b></div>
+      </div>
+    </div>
+
+    <div class="about-main reveal" data-od-id="about-main">
+      <span class="eyebrow" data-i18n="about.eyebrow2">{t("about.eyebrow2")}</span>
+      <p data-i18n="about.p1">{t("about.p1")}</p>
+      <p data-i18n="about.p2">{t("about.p2")}</p>
+
+      <div class="principles">
+        <div><b data-i18n="about.pr1k">{t("about.pr1k")}</b><span data-i18n="about.pr1v">{t("about.pr1v")}</span></div>
+        <div><b data-i18n="about.pr2k">{t("about.pr2k")}</b><span data-i18n="about.pr2v">{t("about.pr2v")}</span></div>
+        <div><b data-i18n="about.pr3k">{t("about.pr3k")}</b><span data-i18n="about.pr3v">{t("about.pr3v")}</span></div>
+      </div>
+
+      <div class="elsewhere">
+        <span class="mono small muted" data-i18n="about.elsewhere">{t("about.elsewhere")}</span>
+        <div class="socials" data-od-id="about-socials">
+          <a class="btn" href={SOCIAL.github} target="_blank" rel="noopener" data-od-id="about-github">GitHub ↗</a>
+          <a class="btn" href={SOCIAL.linkedin} target="_blank" rel="noopener" data-od-id="about-linkedin">LinkedIn ↗</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

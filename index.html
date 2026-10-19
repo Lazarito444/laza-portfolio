@@ -1,0 +1,838 @@
+<!doctype html>
+<html lang="en" data-theme="dark" data-lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Ariel Lázaro — Full-Stack Developer (.NET, Go, Angular, Flutter, Cloud)</title>
+<meta name="description" content="Ariel Lázaro, senior full-stack engineer. ASP.NET Core, Go, Angular, Flutter and cloud infra in one pair of hands: APIs, web, mobile and Terraform with green CI." />
+<meta name="theme-color" id="themeColor" content="#141419" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23b8f135'/%3E%3Ctext x='16' y='23' font-family='monospace' font-size='17' font-weight='700' text-anchor='middle' fill='%230e1206'%3EL_%3C/text%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<script>
+/* Apply saved theme + language before first paint so there is no flash. */
+(function(){try{
+  var t=localStorage.getItem('al.theme');
+  if(t!=='light'&&t!=='dark'){t=(window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches)?'light':'dark';}
+  document.documentElement.setAttribute('data-theme',t);
+  var l=localStorage.getItem('al.lang');
+  if(l!=='en'&&l!=='es'){l=((navigator.language||'en').toLowerCase().indexOf('es')===0)?'es':'en';}
+  document.documentElement.setAttribute('data-lang',l);
+  document.documentElement.lang=l;
+}catch(e){}})();
+</script>
+<style>
+/* ===========================================================
+   Tokens. Every surface/ink value is a token so both themes
+   stay readable; light is a cool neutral paper, never a warm
+   cream wash. Accent splits into ink (text/border) and fill
+   (solid chip), because bright lime fails contrast on paper.
+   =========================================================== */
+:root{
+  color-scheme:dark;
+  --bg:oklch(20% 0.01 260);
+  --panel:rgba(255,255,255,.022);
+  --card:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.012));
+  --bar:rgba(0,0,0,.45);
+  --fg:oklch(93% 0.01 250);
+  --muted:oklch(75% 0.02 250);
+  --faint:oklch(65% 0.02 250);
+  --border:rgba(255,255,255,.09);
+  --border-strong:rgba(255,255,255,.18);
+  --raise:rgba(255,255,255,.05);
+  --raise-hover:rgba(255,255,255,.1);
+  --sunken:rgba(0,0,0,.34);
+  --grid:rgba(255,255,255,.025);
+  --stroke:rgba(255,255,255,.3);
+  --accent:oklch(84% 0.19 145);
+  --accent-fill:oklch(84% 0.19 145);
+  --accent-ink:oklch(21% 0.06 145);
+  --accent-dim:rgba(184,241,53,.12);
+  --accent-line:rgba(184,241,53,.32);
+  --danger:oklch(74% 0.16 25);
+  --code-bg:#0b0b0e;
+  --code-fg:oklch(91% 0.01 250);
+  --code-dim:oklch(63% 0.02 258);
+  --code-cyan:oklch(80% 0.11 230);
+  --nav-bg:color-mix(in srgb,oklch(20% 0.01 260) 82%,transparent);
+  --menu-bg:#111116;
+  --selection:rgba(184,241,53,.25);
+  --r:14px;
+  --font-display:'Space Grotesk','Söhne','Avenir Next',-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+  --font-body:'IBM Plex Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+  --font-serif:'Iowan Old Style',Georgia,'Times New Roman',serif;
+  --font-mono:'IBM Plex Mono','JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+html[data-theme="light"]{
+  color-scheme:light;
+  --bg:oklch(97.5% 0.004 250);
+  --panel:rgba(0,0,0,.015);
+  --card:linear-gradient(180deg,#ffffff,rgba(0,0,0,.012));
+  --bar:rgba(0,0,0,.035);
+  --fg:oklch(21% 0.02 260);
+  --muted:oklch(45% 0.02 258);
+  --faint:oklch(46% 0.018 258);
+  --border:rgba(0,0,0,.12);
+  --border-strong:rgba(0,0,0,.24);
+  --raise:rgba(0,0,0,.035);
+  --raise-hover:rgba(0,0,0,.075);
+  --sunken:rgba(0,0,0,.04);
+  --grid:rgba(0,0,0,.035);
+  --stroke:rgba(0,0,0,.22);
+  --accent:oklch(45% 0.14 152);
+  --accent-fill:oklch(85% 0.18 145);
+  --accent-ink:oklch(24% 0.07 150);
+  --accent-dim:color-mix(in srgb,var(--accent-fill) 32%,transparent);
+  --accent-line:color-mix(in srgb,var(--accent-fill) 75%,transparent);
+  --danger:oklch(52% 0.19 25);
+  --code-bg:oklch(95.5% 0.006 250);
+  --code-fg:oklch(25% 0.02 258);
+  --code-dim:oklch(54% 0.02 258);
+  --code-cyan:oklch(46% 0.13 240);
+  --nav-bg:color-mix(in srgb,oklch(97.5% 0.004 250) 84%,transparent);
+  --menu-bg:oklch(99.5% 0.003 250);
+  --selection:color-mix(in srgb,var(--accent-fill) 55%,transparent);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background-color:var(--bg);color:var(--fg);font-family:var(--font-body);font-size:15.5px;line-height:1.65;letter-spacing:-.006em;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:56px 56px;transition:background-color .25s ease,color .25s ease}
+p{max-width:65ch;text-wrap:pretty}
+a{color:inherit}
+.wrap{max-width:1280px;margin:0 auto;padding:0 24px}
+h1,h2{font-family:var(--font-display);letter-spacing:-.03em;line-height:.95;font-weight:700;text-wrap:balance}
+h1{font-size:clamp(50px,7.2vw,108px)}
+h2{font-size:clamp(30px,4.2vw,52px)}
+h1 em,h2 em{font-family:var(--font-serif);font-style:italic;font-weight:400;color:var(--accent)}
+.mono{font-family:var(--font-mono);font-variant-numeric:tabular-nums}
+.small{font-size:12.5px}
+.muted{color:var(--muted)}
+.sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+::selection{background:var(--selection);color:var(--fg)}
+section[id]{scroll-margin-top:84px}
+.skip{position:absolute;left:12px;top:-72px;z-index:200;background:var(--accent-fill);color:var(--accent-ink);padding:12px 18px;border-radius:10px;font-weight:600;text-decoration:none;transition:top .18s ease}
+.skip:focus{top:12px}
+.eyebrow{font-family:var(--font-mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);display:inline-flex;gap:9px;align-items:center;font-weight:700}
+.eyebrow::before{content:"";width:7px;height:7px;background:var(--accent);border-radius:50%;box-shadow:0 0 12px var(--accent)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font-family:var(--font-body);font-weight:600;font-size:14px;letter-spacing:.01em;padding:13px 20px;border-radius:999px;border:1px solid var(--border-strong);background:var(--raise);color:var(--fg);text-decoration:none;cursor:pointer;min-height:44px;transition:background .18s ease,border-color .18s ease,transform .06s ease}
+.btn:hover{background:var(--raise-hover);border-color:var(--border-strong)}
+.btn:active{transform:translateY(1px)}
+.btn[disabled],.btn[aria-busy="true"]{cursor:progress;opacity:.72}
+.btn[aria-busy="true"]::after{content:"";width:13px;height:13px;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.btn-lime{background:var(--accent-fill);border-color:var(--accent-fill);color:var(--accent-ink);font-weight:700}
+.btn-lime:hover{background:var(--accent-fill);border-color:var(--accent-fill);filter:brightness(1.06)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+/* status bar + nav */
+.statusbar{border-bottom:1px solid var(--border);background:var(--bar);font-family:var(--font-mono);font-size:11.5px;color:var(--muted)}
+.statusbar-in{display:flex;justify-content:space-between;max-width:1280px;margin:0 auto;padding:8px 24px;gap:12px}
+.dot{color:var(--accent)}
+.nav{position:sticky;top:0;z-index:60;background:var(--nav-bg);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
+.nav-in{display:flex;align-items:center;justify-content:space-between;height:62px;gap:12px}
+.brand{display:flex;gap:11px;align-items:center;text-decoration:none;flex-shrink:0}
+.brand-mark{width:32px;height:32px;border-radius:9px;background:var(--accent-fill);color:var(--accent-ink);display:grid;place-items:center;font-family:var(--font-mono);font-weight:700;font-size:13px}
+.crumbs{font-family:var(--font-mono);font-size:12px;color:var(--faint)}
+.crumbs b{color:var(--fg)}
+.nav-links{display:flex;gap:2px}
+.nav-links a{font-size:13px;font-weight:500;letter-spacing:.02em;color:var(--muted);text-decoration:none;padding:9px 12px;border-radius:999px}
+.nav-links a:hover{color:var(--fg);background:var(--raise)}
+.nav-links a.active{color:var(--fg);background:var(--raise-hover)}
+.nav-right{display:flex;align-items:center;gap:8px}
+.menu-btn{display:none;background:var(--raise);border:1px solid var(--border);color:var(--fg);border-radius:11px;width:44px;height:44px;cursor:pointer}
+/* small icon controls: theme switch + language segmented control */
+.icon-btn{width:44px;height:44px;border-radius:11px;border:1px solid var(--border);background:var(--raise);color:var(--fg);cursor:pointer;display:grid;place-items:center;flex-shrink:0}
+.icon-btn:hover{background:var(--raise-hover);border-color:var(--border-strong)}
+.icon-btn svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.lang{display:flex;border:1px solid var(--border);border-radius:11px;overflow:hidden;background:var(--raise);flex-shrink:0}
+.lang button{font-family:var(--font-mono);font-size:12px;font-weight:500;letter-spacing:.06em;height:44px;padding:0 13px;border:0;background:transparent;color:var(--muted);cursor:pointer}
+.lang button+button{border-left:1px solid var(--border)}
+.lang button:hover{color:var(--fg)}
+.lang button[aria-pressed="true"]{background:var(--fg);color:var(--bg);font-weight:700}
+/* layout shell */
+.shell{display:grid;grid-template-columns:232px 1fr;align-items:start}
+.rail{position:sticky;top:62px;height:calc(100vh - 62px);border-right:1px solid var(--border);padding:26px 18px 18px 0;display:flex;flex-direction:column;gap:18px;overflow:auto}
+.rail ul{list-style:none;display:flex;flex-direction:column}
+.rail ul a{display:flex;gap:10px;align-items:baseline;text-decoration:none;padding:9px 10px;border-radius:10px;font-family:var(--font-mono);font-size:12px;color:var(--muted)}
+.rail ul a span:first-child{color:var(--faint)}
+.rail ul a:hover{background:var(--raise);color:var(--fg)}
+.rail ul a.active{background:var(--raise);color:var(--fg)}
+.rail ul a.active span:first-child{color:var(--accent)}
+.rail-card{border:1px solid var(--border);border-radius:12px;padding:14px;background:var(--panel);font-size:12.5px}
+.content{min-width:0;padding:34px 0 0 34px}
+.sec{padding:58px 0 8px}
+.sec-top{margin-bottom:22px}
+.sec-top p{color:var(--muted);font-size:14px;margin-top:8px;max-width:62ch}
+.sec-top .link-btn{margin-top:10px;display:inline-block}
+/* hero */
+.readme-head{display:grid;grid-template-columns:1.5fr .9fr;gap:22px;align-items:start}
+.frontmatter{border:1px solid var(--border);border-radius:var(--r);background:var(--code-bg);color:var(--code-fg);font-family:var(--font-mono);font-size:12.5px;overflow:hidden}
+.fm-bar{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--code-dim);font-size:11px;letter-spacing:.08em;text-transform:uppercase;display:flex;justify-content:space-between}
+.fm-body{padding:16px;color:var(--code-dim);line-height:1.8}
+.fm-body b{color:var(--code-fg);font-weight:500}
+.k{color:var(--code-cyan)}
+.lede{color:var(--muted);font-size:17px;margin-top:18px;max-width:56ch}
+.lede b{color:var(--fg);font-weight:600}
+.hero-actions{display:flex;gap:10px;margin-top:22px;flex-wrap:wrap}
+.runbar{margin-top:24px;border:1px solid var(--border);border-radius:12px;background:var(--code-bg);color:var(--code-fg);display:flex;align-items:center;gap:12px;padding:12px 14px;font-family:var(--font-mono);font-size:12.5px;overflow-x:auto;white-space:nowrap}
+.runbar .prompt{color:var(--accent)}
+.copy-btn{background:var(--raise);border:1px solid var(--border);color:var(--fg);border-radius:8px;padding:8px 12px;font-family:var(--font-mono);font-size:12px;cursor:pointer;margin-left:auto;min-height:36px;flex-shrink:0}
+.copy-btn:hover{background:var(--raise-hover)}
+/* about */
+.about-grid{display:grid;grid-template-columns:320px 1fr;gap:14px;align-items:start}
+.id-card{border:1px solid var(--border);border-radius:16px;overflow:hidden;background:var(--panel)}
+.id-top{background:var(--accent-fill);color:var(--accent-ink);padding:18px;font-family:var(--font-mono)}
+.id-top b{font-family:var(--font-display);font-size:34px;display:block;letter-spacing:-.03em;line-height:1.1;margin:4px 0}
+.id-row{display:flex;gap:14px;align-items:center;justify-content:space-between}
+.id-photo{position:relative;width:78px;height:78px;flex:none;border-radius:10px;border:1.5px dashed color-mix(in oklab, var(--accent-ink) 45%, transparent);background:color-mix(in oklab, var(--accent-ink) 9%, transparent);display:grid;place-items:center;overflow:hidden}
+.id-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:9px}
+.id-ph-glyph{font-family:var(--font-mono);font-weight:700;font-size:22px;color:color-mix(in oklab, var(--accent-ink) 55%, transparent)}
+.id-body{padding:16px;font-size:13px;display:flex;flex-direction:column;gap:10px}
+.id-body>div{display:flex;justify-content:space-between;gap:10px;border-bottom:1px dashed var(--border);padding-bottom:8px}
+.id-body>div:last-child{border-bottom:0;padding-bottom:0}
+.about-main{border:1px solid var(--border);border-radius:16px;padding:24px;background:var(--card)}
+.about-main p{color:var(--muted);font-size:14.5px;margin-top:12px}
+.principles{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px}
+.principles>div{border:1px solid var(--border);border-radius:12px;padding:14px;background:var(--sunken)}
+.principles b{font-family:var(--font-mono);font-size:11.5px;letter-spacing:.06em;color:var(--accent);display:block;margin-bottom:6px}
+.principles span{font-size:13px;color:var(--muted)}
+.socials{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+.socials .btn{padding:10px 16px;min-height:40px;font-size:13px}
+.elsewhere{margin-top:18px;border-top:1px solid var(--border);padding-top:14px}
+/* projects */
+.filters{position:sticky;top:62px;z-index:5;display:flex;gap:8px;flex-wrap:wrap;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);padding:10px 0;margin-bottom:4px}
+.filter-btn{font-family:var(--font-mono);font-size:12px;padding:10px 16px;border-radius:999px;border:1px solid var(--border);background:var(--raise);color:var(--muted);cursor:pointer;min-height:44px}
+.filter-btn:hover{color:var(--fg);border-color:var(--border-strong)}
+.filter-btn[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg);font-weight:700}
+.case{border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:12px;background:var(--card)}
+.case-featured{display:grid;grid-template-columns:1.1fr .9fr}
+.case-main{padding:24px}
+.case-side{border-left:1px solid var(--border);background:var(--sunken);padding:20px;font-family:var(--font-mono);font-size:12px;color:var(--muted);display:flex;flex-direction:column;gap:12px;justify-content:center}
+.case-row{display:grid;grid-template-columns:96px 1fr 290px}
+.case-num{padding:20px;border-right:1px solid var(--border);font-family:var(--font-display);font-size:42px;font-weight:700;line-height:1;color:transparent;-webkit-text-stroke:1px var(--stroke);transition:color .25s ease}
+.case:hover .case-num{color:var(--accent);-webkit-text-stroke:0}
+.case h3{font-family:var(--font-display);font-weight:700;letter-spacing:-.025em;line-height:1.05;font-size:clamp(22px,3vw,34px);margin:10px 0;text-wrap:balance}
+.pill{font-family:var(--font-mono);font-size:11px;padding:4px 10px;border-radius:999px;border:1px solid var(--border);color:var(--muted);background:var(--raise);display:inline-block}
+.pill-live{background:var(--accent-dim);border-color:var(--accent-line);color:var(--accent);font-weight:700}
+.tagrow{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+.link-btn{font-weight:600;text-decoration:underline;text-decoration-color:var(--accent);text-underline-offset:4px;text-decoration-thickness:2px;font-size:13px}
+.shot{border:1px dashed var(--border-strong);border-radius:10px;padding:10px;background:var(--code-bg);color:var(--code-fg);overflow-x:auto;white-space:nowrap;font-family:var(--font-mono)}
+.empty{border:1px dashed var(--border-strong);border-radius:16px;padding:28px;text-align:center;color:var(--muted);font-size:14px}
+/* stack */
+.tiers{display:grid;grid-template-columns:1.2fr 1fr .9fr;gap:12px;margin-bottom:12px}
+.tier{border:1px solid var(--border);border-radius:16px;padding:18px;background:var(--panel)}
+.tier:first-child{border-color:var(--accent-line);background:linear-gradient(180deg,color-mix(in srgb,var(--accent-fill) 20%,transparent),var(--panel))}
+.tier h3{font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-bottom:12px;font-weight:500}
+.tier h3 b{color:var(--accent)}
+.skill{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-top:1px solid var(--border);font-size:13.5px}
+.skill span:last-child{font-family:var(--font-mono);font-size:11.5px;color:var(--muted)}
+.fileview{border:1px solid var(--border);border-radius:16px;overflow:hidden;background:var(--code-bg);color:var(--code-fg)}
+.filetabs{display:flex;border-bottom:1px solid var(--border);overflow-x:auto}
+.filetabs button{font-family:var(--font-mono);font-size:12px;background:transparent;border:0;border-right:1px solid var(--border);color:var(--code-dim);padding:13px 16px;cursor:pointer;white-space:nowrap;min-height:44px}
+.filetabs button:hover{color:var(--code-fg)}
+.filetabs button[aria-selected="true"]{background:var(--accent-dim);color:var(--accent);font-weight:500}
+.codepane{padding:18px;font-family:var(--font-mono);font-size:12.8px;line-height:1.8;display:none}
+.codepane.active{display:block}
+.t-dim{color:var(--code-dim)}.t-lime{color:var(--accent)}.t-cyan{color:var(--code-cyan)}
+/* experience */
+.gitlog{border:1px solid var(--border);border-radius:16px;background:var(--code-bg);color:var(--code-fg);font-family:var(--font-mono);font-size:12.8px;overflow:hidden}
+.gitlog header{padding:10px 16px;border-bottom:1px solid var(--border);color:var(--code-dim);font-size:11px;letter-spacing:.08em}
+.commit{display:grid;grid-template-columns:84px 110px 1fr;gap:12px;padding:14px 16px;border-bottom:1px solid var(--border)}
+.commit:last-child{border-bottom:0}
+.hash{color:var(--accent)}
+.date{color:var(--code-dim)}
+.commit b{color:var(--code-fg);font-weight:500}
+.commit ul{margin:8px 0 0 16px;font-family:var(--font-body);font-size:13px;color:var(--code-dim)}
+/* code & contributions */
+.contrib-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:12px;align-items:start}
+.heat{border:1px solid var(--border);border-radius:16px;padding:18px;background:var(--panel)}
+.cells{display:grid;grid-template-columns:repeat(26,1fr);gap:3px;margin:14px 0 8px}
+.cells i{aspect-ratio:1;border-radius:2.5px;background:var(--raise);display:block}
+.cells i.l1{background:color-mix(in srgb,var(--accent) 28%,transparent)}
+.cells i.l2{background:color-mix(in srgb,var(--accent) 58%,transparent)}
+.cells i.l3{background:var(--accent)}
+.repos{display:flex;flex-direction:column;gap:10px}
+.repo{border:1px solid var(--border);border-radius:14px;padding:16px;background:var(--panel)}
+.repo:hover{border-color:var(--border-strong)}
+.repo-top{display:flex;justify-content:space-between;gap:10px;align-items:center}
+.repo h3{font-size:15px;font-weight:600;letter-spacing:-.01em}
+.repo p{font-size:13px;color:var(--muted);margin-top:6px}
+.langdot{font-family:var(--font-mono);font-size:11px;color:var(--muted);display:flex;gap:6px;align-items:center;margin-top:10px}
+.langdot i{width:8px;height:8px;border-radius:50%;display:inline-block}
+/* contact */
+.issue-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:12px;align-items:start}
+.form,.preview{border:1px solid var(--border);border-radius:16px;padding:22px;background:var(--panel)}
+label{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);display:flex;flex-direction:column;gap:7px;margin-bottom:14px}
+input,textarea,select{font:14.5px/1.5 var(--font-body);padding:12px 14px;border-radius:10px;border:1px solid var(--border-strong);background:var(--sunken);color:var(--fg);width:100%;letter-spacing:0}
+input::placeholder,textarea::placeholder{color:var(--faint)}
+input:focus,textarea:focus,select:focus{outline:2px solid var(--accent);outline-offset:1px}
+input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--danger);outline-color:var(--danger)}
+textarea{min-height:100px;resize:vertical}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.err{font-size:12px;color:var(--danger);font-family:var(--font-mono);display:none;text-transform:none;letter-spacing:0}
+.form-ok{display:none;background:var(--accent-dim);border:1px solid var(--accent-line);border-radius:10px;padding:12px;font-size:13px;margin-bottom:12px;color:var(--fg)}
+.issue{background:var(--code-bg);border:1px solid var(--border);color:var(--code-fg)}
+.issue .pill{color:var(--code-dim)}
+.issue h3{color:var(--code-fg);font-size:16px;font-weight:600}
+.issue .muted{color:var(--code-dim)}
+.issue .meta{font-family:var(--font-mono);font-size:11.5px;color:var(--code-dim);margin-top:12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.issue a{color:var(--code-fg)}
+/* footer */
+footer{border-top:1px solid var(--border);margin-top:58px;padding:0 0 28px;background:var(--bar);position:relative}
+footer::before{content:"";position:absolute;top:-1px;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--accent),transparent);opacity:.7}
+.f-grid{display:grid;grid-template-columns:1.3fr 1fr 1fr auto;gap:22px;padding:28px 0 22px;align-items:start}
+.f-brand{display:flex;flex-direction:column;gap:10px}
+.f-row{display:flex;gap:10px;align-items:center}
+.f-badge{width:34px;height:34px;border-radius:10px;background:var(--accent-fill);color:var(--accent-ink);display:grid;place-items:center;font-family:var(--font-mono);font-weight:700;font-size:13px;flex-shrink:0}
+.f-brand .pill{align-self:flex-start}
+.f-col h3,.f-col h2{font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-bottom:10px;font-weight:500;line-height:1.4}
+.f-col a{display:block;text-decoration:none;font-size:13.5px;color:var(--muted);padding:5px 0}
+.f-col a:hover{color:var(--accent)}
+.f-top{display:flex;flex-direction:column;gap:10px;align-items:flex-end}
+.f-top-btn{width:48px;height:48px;border-radius:50%;border:1px solid var(--border-strong);background:var(--raise);color:var(--fg);font-size:18px;cursor:pointer;text-decoration:none;display:grid;place-items:center}
+.f-top-btn:hover{background:var(--accent-fill);color:var(--accent-ink);border-color:var(--accent-fill)}
+.foot{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;border-top:1px solid var(--border);padding-top:16px}
+.giant{font-family:var(--font-display);font-weight:700;font-size:clamp(56px,10vw,138px);line-height:.88;letter-spacing:-.045em;margin-top:16px;color:transparent;-webkit-text-stroke:1px var(--stroke);transition:color .3s ease;user-select:none}
+.giant:hover{color:var(--accent-dim)}
+.giant b{color:var(--accent);-webkit-text-stroke:0}
+.reveal{opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s ease}
+.reveal.on{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  .reveal{opacity:1;transform:none}
+  html{scroll-behavior:auto}
+  .btn[aria-busy="true"]::after{animation:none}
+  *{transition-duration:.01ms}
+}
+@media (max-width:1020px){
+  .f-grid{grid-template-columns:1fr 1fr}
+  .f-top{align-items:flex-start;flex-direction:row;justify-content:space-between;grid-column:1/-1}
+  .shell{grid-template-columns:1fr}
+  .rail{position:static;height:auto;border-right:0;border-bottom:1px solid var(--border);padding:14px 0}
+  .rail ul{flex-direction:row;overflow-x:auto;gap:4px}
+  .rail ul a{white-space:nowrap}
+  .rail-card{display:none}
+  .content{padding-left:0}
+  .readme-head,.case-featured,.contrib-grid,.issue-grid,.about-grid{grid-template-columns:1fr}
+  .case-side{border-left:0;border-top:1px solid var(--border)}
+  .case-row{grid-template-columns:1fr}
+  .case-num{border-right:0;border-bottom:1px solid var(--border);font-size:32px;padding:14px 20px}
+  .tiers{grid-template-columns:1fr}
+}
+@media (max-width:700px){
+  .nav-links{display:none}
+  .menu-btn{display:grid;place-items:center}
+  .nav-links.open{display:flex;position:absolute;top:62px;left:0;right:0;background:var(--menu-bg);border-bottom:1px solid var(--border);flex-direction:column;padding:8px 20px 16px;box-shadow:0 18px 40px rgba(0,0,0,.35)}
+  .nav-links.open a{padding:14px 6px;border-top:1px solid var(--border);border-radius:0}
+  .form-row,.principles{grid-template-columns:1fr}
+  .commit{grid-template-columns:1fr;gap:2px}
+  .cells{grid-template-columns:repeat(18,1fr)}
+}
+@media (max-width:560px){
+  .crumbs{display:none}
+  .nav-right .btn-lime{display:none}
+  .lang button{padding:0 10px;font-size:11.5px}
+  .statusbar-in span:last-child{display:none}
+  .wrap,.statusbar-in{padding-left:18px;padding-right:18px}
+  h1{font-size:clamp(44px,12vw,64px)}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#hero" data-i18n="nav.skip" data-od-id="skip-link">Skip to content</a>
+<div class="statusbar"><div class="statusbar-in">
+<span><span class="dot" aria-hidden="true">●</span> <span data-i18n="status.left">lazarito.dev — open for new projects</span></span>
+<span data-i18n="status.right">remote-first · reply &lt; 24h</span>
+</div></div>
+<header class="nav" data-od-id="site-nav"><div class="wrap nav-in">
+<a class="brand" href="#hero" data-od-id="brand-home"><span class="brand-mark" aria-hidden="true">L_</span><span class="crumbs"><b>~/lazarito.dev</b> / portfolio</span></a>
+<nav class="nav-links" id="navLinks" data-od-id="primary-nav" data-i18n-aria="nav.label" aria-label="Sections">
+<a href="#hero" data-i18n="nav.hero">Hero</a><a href="#about" data-i18n="nav.about">About</a><a href="#projects" data-i18n="nav.projects">Projects</a><a href="#stack" data-i18n="nav.stack">Stack</a><a href="#experience" data-i18n="nav.experience">Experience</a><a href="#code" data-i18n="nav.code">Code</a><a href="#contact" data-i18n="nav.contact">Contact</a>
+</nav>
+<div class="nav-right">
+<a class="btn btn-lime" style="padding:10px 16px;min-height:40px" href="#contact" data-i18n="nav.hire" data-od-id="nav-hire-btn">Hire me</a>
+<button class="icon-btn" id="themeBtn" type="button" role="switch" aria-checked="true" aria-label="Switch to light theme" title="Switch to light theme" data-od-id="theme-toggle">
+<svg data-theme-icon="dark" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z"/></svg>
+<svg data-theme-icon="light" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.4 1.4M17.6 17.6L19 19M19 5l-1.4 1.4M6.4 17.6L5 19"/></svg>
+</button>
+<div class="lang" role="group" data-i18n-aria="ctrl.lang" aria-label="Language" data-od-id="lang-toggle">
+<button type="button" data-lang="en" aria-pressed="true" data-od-id="lang-en">EN</button>
+<button type="button" data-lang="es" aria-pressed="false" data-od-id="lang-es">ES</button>
+</div>
+<button class="menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="Menu" data-i18n-aria="nav.menu" data-od-id="menu-toggle">
+<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+</button>
+</div>
+</div></header>
+<div class="wrap"><div class="shell">
+<nav class="rail" data-i18n-aria="railcard.index" aria-label="Section index"><ul id="railNav" data-od-id="rail-index">
+<li><a href="#hero" class="active" aria-current="true"><span>00</span> <span data-i18n="rail.00">HERO</span></a></li>
+<li><a href="#about"><span>01</span> <span data-i18n="rail.01">ABOUT</span></a></li>
+<li><a href="#projects"><span>02</span> <span data-i18n="rail.02">PROJECTS</span></a></li>
+<li><a href="#stack"><span>03</span> <span data-i18n="rail.03">STACK</span></a></li>
+<li><a href="#experience"><span>04</span> <span data-i18n="rail.04">EXPERIENCE</span></a></li>
+<li><a href="#code"><span>05</span> <span data-i18n="rail.05">CODE</span></a></li>
+<li><a href="#contact"><span>06</span> <span data-i18n="rail.06">CONTACT</span></a></li>
+</ul><div class="rail-card" data-od-id="rail-status"><strong class="mono" style="color:var(--accent);font-size:12px" data-i18n="railcard.status">● open to new projects</strong><br/><span class="muted"><span data-i18n="railcard.l2a">reply &lt; 24h</span><br/><span data-i18n="railcard.l2b">fixed quote</span><br/><br/><a href="mailto:ariellazaro444@gmail.com">ariellazaro444@gmail.com</a></span></div></nav>
+<main class="content" id="main">
+<section class="sec" id="hero" style="padding-top:10px"><div data-od-id="hero-intro">
+<span class="eyebrow" data-i18n="hero.eyebrow" data-od-id="hero-eyebrow">00 · HERO</span>
+<h1 data-od-id="hero-headline" style="margin-top:12px"><span data-i18n="hero.h1a">One owner.</span><br/><span data-i18n="hero.h1b">Every layer.</span> <em data-i18n="hero.h1c">Zero handoffs.</em></h1>
+<div class="readme-head" style="margin-top:18px"><div>
+<p class="lede" data-od-id="hero-lede"><span data-i18n="hero.lede.a">I’m Ariel Lázaro, senior full-stack developer. I ship the slice most teams split across three hires: </span><b>ASP.NET Core + Go</b><span data-i18n="hero.lede.c1"> services, </span><b>Angular</b><span data-i18n="hero.lede.c2"> consoles, </span><b>Flutter</b><span data-i18n="hero.lede.c3"> mobile from one codebase, on </span><b>Azure/GCP + Terraform</b><span data-i18n="hero.lede.c4"> with green CI.</span></p>
+<div class="hero-actions"><a class="btn btn-lime" href="#projects" data-i18n="hero.cta1" data-od-id="hero-cta-work">Open featured projects ↓</a><a class="btn" href="#contact" data-i18n="hero.cta2" data-od-id="hero-cta-contact">Get in touch</a></div>
+</div>
+<div class="frontmatter" data-od-id="hero-frontmatter"><div class="fm-bar"><span data-i18n="fm.title">frontmatter</span><span data-i18n="fm.lang">yaml</span></div><div class="fm-body"><span class="k">role:</span> <b data-i18n="fm.role">full stack software engineer</b><br/><span class="k">backend:</span> dotnet, go<br/><span class="k">frontend:</span> angular, astro<br/><span class="k">mobile:</span> flutter<br/><span class="k">infra:</span> cloud, azure, aws<br/><span class="k">status:</span> <b style="color:var(--accent)" data-i18n="fm.status">● currently open for new projects</b></div></div></div>
+<div class="runbar" data-od-id="hero-terminal"><span class="prompt" aria-hidden="true">$</span><span>hire lazarito --scope "api + web + mobile" --start "as soon as possible"</span><button class="copy-btn" id="copyBtn" type="button" data-copy-key="hero.copy" data-i18n="hero.copy" data-od-id="copy-email-btn">copy email</button></div>
+<span class="sr" id="copyStatus" role="status" aria-live="polite"></span>
+</div></section>
+<section class="sec" id="about"><div class="sec-top"><div data-od-id="about-heading"><span class="eyebrow" data-i18n="about.eyebrow">01 · About me</span><h2><span data-i18n="about.h2a">The human</span> <em data-i18n="about.h2b">behind the merge.</em></h2></div></div>
+<div class="about-grid">
+<div class="id-card reveal" data-od-id="about-card"><div class="id-top"><div class="id-row"><div class="id-text"><span class="mono small" data-i18n="about.idbadge">ID // FULL-STACK</span><b>Ariel Lázaro</b><span class="mono small" data-i18n="about.loc">UTC-4 · remote-first</span></div><div class="id-photo" data-od-id="about-photo" role="img" aria-label="Portrait of Ariel Lázaro"><span class="id-ph-glyph" aria-hidden="true">L_</span><img id="photoImg" src="assets/photo.jpg" alt="" /></div></div></div><div class="id-body"><div><span class="muted" data-i18n="about.f1k">Focus</span><b data-i18n="about.f1v">vertical slices</b></div><div><span class="muted" data-i18n="about.f2k">Daily</span><b data-i18n="about.f2v">C#, Go, TS, Dart, TF</b></div><div><span class="muted" data-i18n="about.f3k">Off-screen</span><b data-i18n="about.f3v">trail runs, espresso, zines</b></div><div><span class="muted" data-i18n="about.f4k">Working style</span><b data-i18n="about.f4v">async-first, looms over meetings</b></div></div></div>
+<div class="about-main reveal" data-od-id="about-main"><span class="eyebrow" data-i18n="about.eyebrow2">Why one owner helps</span><p data-i18n="about.p1">Split backends drift from frontends; mobile drifts from both. I keep one typed contract from Postgres to Flutter so billing, ops tooling and releases move together. Week-1 audit, fixed quote, runbook + loom on every ship — boring process, exciting reliability.</p><p data-i18n="about.p2">I do best with one product team, 3–6 months, where API, web and mobile meet the same domain. If it needs a handoff doc to survive, I already wrote it.</p><div class="principles"><div><b data-i18n="about.pr1k">01 / CONTRACTS</b><span data-i18n="about.pr1v">OpenAPI-first. No guessing across web ↔ mobile.</span></div><div><b data-i18n="about.pr2k">02 / OFFLINE</b><span data-i18n="about.pr2v">Queues + tombstones before optimism.</span></div><div><b data-i18n="about.pr3k">03 / RECEIPTS</b><span data-i18n="about.pr3v">Traces, budgets, previews per PR.</span></div></div><div class="elsewhere"><span class="mono small muted" data-i18n="about.elsewhere">ELSEWHERE —</span><div class="socials" data-od-id="about-socials"><a class="btn" href="https://github.com" target="_blank" rel="noopener" data-od-id="about-github">GitHub ↗</a><a class="btn" href="https://linkedin.com" target="_blank" rel="noopener" data-od-id="about-linkedin">LinkedIn ↗</a><a class="btn" href="https://x.com" target="_blank" rel="noopener" data-od-id="about-x">X / Twitter ↗</a><a class="btn" href="https://stackoverflow.com" target="_blank" rel="noopener" data-od-id="about-stackoverflow">Stack Overflow ↗</a></div></div></div>
+</div></section>
+<section class="sec" id="projects"><div class="sec-top"><div data-od-id="work-heading"><span class="eyebrow" data-i18n="projects.eyebrow">02 · Featured projects</span><h2><span data-i18n="projects.h2a">Case files,</span> <em data-i18n="projects.h2b">not cards.</em></h2><p data-i18n="projects.blurb">One featured, three ledger entries. Filter by trade — repo + loom on the intro call.</p></div>
+<div class="filters" role="group" data-i18n-aria="projects.filters" aria-label="Filter projects by area" data-od-id="work-filters">
+<button class="filter-btn" type="button" aria-pressed="true" data-filter="all" data-i18n="projects.fAll" data-od-id="filter-all">all</button>
+<button class="filter-btn" type="button" aria-pressed="false" data-filter="backend" data-i18n="projects.fBackend" data-od-id="filter-backend">backend</button>
+<button class="filter-btn" type="button" aria-pressed="false" data-filter="frontend" data-i18n="projects.fFrontend" data-od-id="filter-frontend">frontend</button>
+<button class="filter-btn" type="button" aria-pressed="false" data-filter="mobile" data-i18n="projects.fMobile" data-od-id="filter-mobile">mobile</button>
+<button class="filter-btn" type="button" aria-pressed="false" data-filter="cloud" data-i18n="projects.fCloud" data-od-id="filter-cloud">cloud</button>
+</div></div>
+<div id="workGrid">
+<article class="case case-featured reveal" data-lanes="backend cloud" data-od-id="project-ledger"><div class="case-main"><span class="pill pill-live" data-i18n="p1.pill">● live in prod · featured</span><h3 data-i18n="p1.title">LedgerFlow — invoicing API + workers</h3><p class="muted" data-i18n="p1.desc">Multi-tenant billing: .NET ledger + Go PDF/dunning workers. Idempotency keys, RLS per tenant.</p><div class="tagrow"><span class="pill">C# .NET 8</span><span class="pill">Go</span><span class="pill">Postgres</span><span class="pill">Terraform</span></div><p style="margin-top:12px"><a class="link-btn" href="#contact" data-i18n="p1.link" data-od-id="project-ledger-case">Request walkthrough →</a></p></div><div class="case-side"><div>FILE_01 / billing</div><div class="shot">POST /v1/invoices → 201 · p95 84ms<br/>412 msgs · 0 retries</div><div class="muted" data-i18n="p1.note">openapi.yaml + runbook included</div></div></article>
+<article class="case case-row reveal" data-lanes="frontend backend" data-od-id="project-dispatch"><div class="case-num" aria-hidden="true">02</div><div class="case-main"><span class="pill" data-i18n="p2.pill">Frontend + Backend</span><h3 data-i18n="p2.title">Dispatch Board</h3><p class="muted" data-i18n="p2.desc">Angular 18 live board on SignalR over Go + .NET. Audit log included.</p><div class="tagrow"><span class="pill">Angular 18</span><span class="pill">SignalR</span><span class="pill">gRPC</span></div><p style="margin-top:10px"><a class="link-btn" href="#contact" data-i18n="p2.link" data-od-id="project-dispatch-case">Walkthrough →</a></p></div><div class="case-side"><div class="shot">ng test — 212 passed<br/>AA · keyboard-first</div></div></article>
+<article class="case case-row reveal" data-lanes="mobile backend" data-od-id="project-fieldkit"><div class="case-num" aria-hidden="true">03</div><div class="case-main"><span class="pill" data-i18n="p3.pill">Mobile</span><h3 data-i18n="p3.title">FieldKit — offline-first</h3><p class="muted" data-i18n="p3.desc">Flutter for field techs: SQLite queue, resumable uploads, FCM.</p><div class="tagrow"><span class="pill">Flutter</span><span class="pill">Riverpod</span><span class="pill">FCM</span></div><p style="margin-top:10px"><a class="link-btn" href="#contact" data-i18n="p3.link" data-od-id="project-fieldkit-case">Walkthrough →</a></p></div><div class="case-side"><div class="shot">28.4 MB · 60fps<br/>LWW + tombstones</div></div></article>
+<article class="case case-row reveal" data-lanes="cloud backend" data-od-id="project-platform"><div class="case-num" aria-hidden="true">04</div><div class="case-main"><span class="pill" data-i18n="p4.pill">Cloud</span><h3 data-i18n="p4.title">ShipKit — PR envs</h3><p class="muted" data-i18n="p4.desc">Every PR gets an ephemeral env with seed data. Gone on merge.</p><div class="tagrow"><span class="pill">Azure · GCP</span><span class="pill">Terraform</span><span class="pill">Actions</span></div><p style="margin-top:10px"><a class="link-btn" href="#contact" data-i18n="p4.link" data-od-id="project-platform-case">Walkthrough →</a></p></div><div class="case-side"><div class="shot">plan: 12 add · 0 destroy<br/>rev 42 · 0-downtime</div></div></article>
+</div><p class="empty" id="workEmpty" hidden data-i18n="projects.empty">No files in this lane — try another filter.</p>
+<p class="mono small muted" id="workCount" role="status" aria-live="polite" style="margin-top:10px" data-od-id="work-count">showing 4 / 4 files</p></section>
+<section class="sec" id="stack"><div class="sec-top"><div data-od-id="toolbox-heading"><span class="eyebrow" data-i18n="stack.eyebrow">03 · Tech stack &amp; skills</span><h2><span data-i18n="stack.h2a">Daily, fluent,</span> <em data-i18n="stack.h2b">familiar.</em></h2><p data-i18n="stack.blurb">Honest tiers — no 97% bars. Tabs show the files I actually touch.</p></div></div>
+<div class="tiers">
+<div class="tier reveal" data-od-id="tier-daily"><h3><b aria-hidden="true">●</b> <span data-i18n="stack.t1">DAILY DRIVER</span></h3><div class="skill"><span>C# / ASP.NET Core</span><span data-i18n="stack.t1s1">APIs + workers</span></div><div class="skill"><span>Go</span><span data-i18n="stack.t1s2">ingest + jobs</span></div><div class="skill"><span>TypeScript / Angular</span><span data-i18n="stack.t1s3">consoles</span></div><div class="skill"><span>Dart / Flutter</span><span data-i18n="stack.t1s4">mobile</span></div><div class="skill"><span>Terraform + Actions</span><span data-i18n="stack.t1s5">envs + CI</span></div></div>
+<div class="tier reveal" data-od-id="tier-fluent"><h3><span data-i18n="stack.t2">FLUENT</span></h3><div class="skill"><span>Postgres + Redis</span><span data-i18n="stack.t2s1">tuning</span></div><div class="skill"><span>gRPC + SignalR</span><span data-i18n="stack.t2s2">realtime</span></div><div class="skill"><span>Docker / K8s basics</span><span data-i18n="stack.t2s3">ship</span></div><div class="skill"><span>Otel + Grafana</span><span data-i18n="stack.t2s4">observe</span></div></div>
+<div class="tier reveal" data-od-id="tier-familiar"><h3><span data-i18n="stack.t3">FAMILIAR</span></h3><div class="skill"><span>Azure / GCP</span><span data-i18n="stack.t3s1">prod</span></div><div class="skill"><span>Playwright</span><span data-i18n="stack.t3s2">e2e</span></div><div class="skill"><span>Fastlane / stores</span><span data-i18n="stack.t3s3">release</span></div></div>
+</div>
+<div class="fileview" data-od-id="stack-viewer"><div class="filetabs" role="tablist" data-i18n-aria="stack.tabs" aria-label="Stack files" data-od-id="stack-tabs"><button type="button" role="tab" id="tabDotnet" aria-selected="true" aria-controls="paneDotnet" tabindex="0" data-tab="dotnet" data-od-id="tab-dotnet">billing.csproj</button><button type="button" role="tab" id="tabGo" aria-selected="false" aria-controls="paneGo" tabindex="-1" data-tab="go" data-od-id="tab-go">go.mod</button><button type="button" role="tab" id="tabNg" aria-selected="false" aria-controls="paneNg" tabindex="-1" data-tab="ng" data-od-id="tab-ng">invoices.component.ts</button><button type="button" role="tab" id="tabFl" aria-selected="false" aria-controls="paneFl" tabindex="-1" data-tab="fl" data-od-id="tab-fl">pubspec.yaml</button><button type="button" role="tab" id="tabTf" aria-selected="false" aria-controls="paneTf" tabindex="-1" data-tab="tf" data-od-id="tab-tf">main.tf</button></div>
+<div class="codepane active" role="tabpanel" id="paneDotnet" aria-labelledby="tabDotnet" tabindex="0" data-pane="dotnet"><span class="t-dim">&lt;!-- EF Core · MassTransit --&gt;</span><br/><span class="t-cyan">&lt;PackageReference</span> Include="Microsoft.EntityFrameworkCore" Version="8.0.*" /<span class="t-cyan">&gt;</span><br/>outbox → worker → idempotent handler</div>
+<div class="codepane" role="tabpanel" id="paneGo" aria-labelledby="tabGo" tabindex="0" data-pane="go" hidden>module ledger/worker<br/>require github.com/jackc/pgx/v5 <span class="t-lime">v5.5.0</span> <span class="t-dim">// p95 84ms</span></div>
+<div class="codepane" role="tabpanel" id="paneNg" aria-labelledby="tabNg" tabindex="0" data-pane="ng" hidden><span class="t-cyan">export class</span> InvoicesComponent &#123; invoices = <span class="t-cyan">signal</span>([]) &#125; <span class="t-dim">// no any</span></div>
+<div class="codepane" role="tabpanel" id="paneFl" aria-labelledby="tabFl" tabindex="0" data-pane="fl" hidden>flutter_riverpod: <span class="t-lime">^2.4.0</span> <span class="t-dim"># offline queue</span></div>
+<div class="codepane" role="tabpanel" id="paneTf" aria-labelledby="tabTf" tabindex="0" data-pane="tf" hidden>module "preview_env" &#123; ttl = <span class="t-lime">"48h"</span> &#125; <span class="t-dim"># destroyed on merge</span></div>
+</div></section>
+<section class="sec" id="experience"><div class="sec-top"><div data-od-id="experience-heading"><span class="eyebrow" data-i18n="exp.eyebrow">04 · Professional experience</span><h2><span data-i18n="exp.h2a">git log,</span> <em data-i18n="exp.h2b">not timeline.</em></h2><p data-i18n="exp.blurb">Checkable roles. Full CV on request.</p></div><a class="link-btn" href="/cv/Resume_Ariel_Lazaro_FullStack.pdf" download data-href-en="/cv/Resume_Ariel_Lazaro_FullStack.pdf" data-href-es="/cv/CV_Ariel_Lazaro_FullStack.pdf" data-i18n="exp.cv">Request CV →</a></div>
+<div class="gitlog" data-od-id="career-log"><header>$ git log --career --oneline</header>
+<div class="commit" data-od-id="exp-senior"><span class="hash">a3f9c21</span><span class="date" data-i18n="exp.c1.date">2022 → now</span><div><b data-i18n="exp.c1.role">Senior full-stack — product teams.</b> <span data-i18n="exp.c1.rest">Billing + ops + mobile. Monthly → weekly trains.</span><ul><li data-i18n="exp.c1.li1">Split monolith → ledger API + async workers</li><li data-i18n="exp.c1.li2">Mentored 4 devs on contracts + strict TS</li></ul></div></div>
+<div class="commit" data-od-id="exp-mid"><span class="hash">7be12d0</span><span class="date" data-i18n="exp.c2.date">2019 → 2022</span><div><b data-i18n="exp.c2.role">Engineer — logistics SaaS.</b> <span data-i18n="exp.c2.rest">C# + Angular admin, Go ingestors.</span><ul><li data-i18n="exp.c2.li1">EF → partitioned Postgres</li><li data-i18n="exp.c2.li2">Angular 9 → 15, zero regressions</li></ul></div></div>
+<div class="commit" data-od-id="exp-booking"><span class="hash">9c1a004</span><span class="date" data-i18n="exp.c3.date">now</span><div><b style="color:var(--accent)" data-i18n="exp.c3.role">open to new projects:</b> <span data-i18n="exp.c3.rest">async-first · audit → fixed quote → runbook + loom</span></div></div>
+</div></section>
+<section class="sec" id="code"><div class="sec-top"><div data-od-id="code-heading"><span class="eyebrow" data-i18n="code.eyebrow">05 · Code &amp; contributions</span><h2><span data-i18n="code.h2a">Commits over</span> <em data-i18n="code.h2b">claims.</em></h2><p data-i18n="code.blurb">Sketch of cadence + selected repos. Private client work demoed on call — links on request.</p></div><a class="link-btn" href="https://github.com" target="_blank" rel="noopener" data-od-id="code-github">GitHub ↗</a></div>
+<div class="contrib-grid">
+<div class="heat reveal" data-od-id="contrib-heat"><span class="eyebrow" data-i18n="code.heat">Activity sketch*</span><div class="cells" id="heatCells" aria-hidden="true"></div><span class="sr" data-i18n="code.heat.aria">Illustrative contribution activity: a few dense weeks among quieter ones.</span><div class="mono small muted" style="display:flex;justify-content:space-between;gap:10px"><span data-i18n="code.heatnote">* illustrative rhythm, real graph on GitHub</span><span><span data-i18n="code.less">less</span> ■■■■ <span data-i18n="code.more">more</span></span></div></div>
+<div class="repos">
+<div class="repo reveal" data-od-id="repo-outbox"><div class="repo-top"><h3>dotnet-outbox-starter</h3><span class="pill" data-i18n="r1.pill">template</span></div><p data-i18n="r1.desc">EF Core outbox + MassTransit worker with idempotency tests and compose file.</p><div class="langdot"><i style="background:#a78bfa" aria-hidden="true"></i>C# · <span data-i18n="r1.note">docs + tests</span></div></div>
+<div class="repo reveal" data-od-id="repo-go"><div class="repo-top"><h3>go-pgx-worker</h3><span class="pill" data-i18n="r2.pill">worker</span></div><p data-i18n="r2.desc">Resumable queue worker: pgx listen/notify, graceful drain, Otel spans.</p><div class="langdot"><i style="background:#22d3ee" aria-hidden="true"></i>Go · <span data-i18n="r2.note">runbook included</span></div></div>
+<div class="repo reveal" data-od-id="repo-ng"><div class="repo-top"><h3>ng-openapi-signals</h3><span class="pill" data-i18n="r3.pill">schematic</span></div><p data-i18n="r3.desc">Generate strict Angular signals + services from OpenAPI. No any, strict on.</p><div class="langdot"><i style="background:#fb7185" aria-hidden="true"></i>TypeScript · <span data-i18n="r3.note">schematic</span></div></div>
+<div class="repo reveal" data-od-id="repo-fl"><div class="repo-top"><h3>flutter-offline-queue</h3><span class="pill" data-i18n="r4.pill">package</span></div><p data-i18n="r4.desc">SQLite tombstone queue + FCM topic helper with offline demo app.</p><div class="langdot"><i style="background:#60a5fa" aria-hidden="true"></i>Dart · <span data-i18n="r4.note">demo app</span></div></div>
+<div class="repo reveal" data-od-id="repo-tf"><div class="repo-top"><h3>tf-preview-env</h3><span class="pill" data-i18n="r5.pill">module</span></div><p data-i18n="r5.desc">Ephemeral PR envs on Container Apps with seeded DB + auto-destroy.</p><div class="langdot"><i style="background:#fbbf24" aria-hidden="true"></i>HCL · <span data-i18n="r5.note">module</span></div></div>
+</div>
+</div></section>
+<section class="sec" id="contact"><div class="sec-top"><div data-od-id="contact-heading"><span class="eyebrow" data-i18n="contact.eyebrow">06 · Contact</span><h2><span data-i18n="contact.h2a">Let's build</span> <em data-i18n="contact.h2b">together.</em></h2><p data-i18n="contact.blurb">Tell me about your project. 24h reply with scope + fixed quote.</p></div></div>
+<div class="issue-grid">
+<form class="form" id="contactForm" novalidate data-od-id="contact-form">
+<label for="fName"><span data-i18n="form.name">Your name</span><input id="fName" name="name" autocomplete="name" placeholder="Ada Lovelace" aria-describedby="eName" data-od-id="field-name"/><span class="err" id="eName" data-i18n="form.nameErr">Add your name.</span></label>
+<label for="fEmail"><span data-i18n="form.email">Contact email</span><input id="fEmail" name="email" type="email" inputmode="email" autocomplete="email" placeholder="ada@company.com" aria-describedby="eEmail" data-od-id="field-email"/><span class="err" id="eEmail" data-i18n="form.emailErr">That email looks off.</span></label>
+<label for="fType"><span data-i18n="form.type">What do you need?</span><select id="fType" name="type" data-od-id="field-type"><option data-i18n="form.o1">full-slice: api + web + mobile</option><option data-i18n="form.o2">backend: .NET / Go</option><option data-i18n="form.o3">frontend: Angular</option><option data-i18n="form.o4">mobile: Flutter</option><option data-i18n="form.o5">infra: cloud + CI</option></select></label>
+<label for="fMsg"><span data-i18n="form.msg">About your project</span><textarea id="fMsg" name="message" placeholder="What? Stack today? Ship date?" data-i18n-ph="form.phMsg" aria-describedby="eMsg" data-od-id="field-message"></textarea><span class="err" id="eMsg" data-i18n="form.msgErr">20+ chars so I can quote.</span></label>
+<p class="sr" id="formStatus" role="status" aria-live="polite"></p>
+<div class="form-ok" id="formOk" role="status" data-i18n="form.ok" data-od-id="form-success">✓ Message sent — reply in 24h. (Demo: nothing sent.)</div>
+<button class="btn btn-lime" type="submit" style="width:100%" data-i18n="form.send" data-od-id="form-submit">Send message →</button>
+</form>
+<div class="preview" data-od-id="issue-preview-wrap"><span class="eyebrow" data-i18n="form.pvTitle">Your message</span><div class="issue" style="margin-top:12px;border-radius:12px;padding:16px"><span class="pill" id="pvLabel">full-slice: api + web + mobile</span><h3 id="pvTitle" style="margin:8px 0">Message from Ada Lovelace</h3><p id="pvBody" class="muted" style="font-size:13.5px">What? Stack today? Ship date? — type left, watch it render here.</p><div class="meta"><a href="mailto:ariellazaro444@gmail.com">ariellazaro444@gmail.com</a><span aria-hidden="true">·</span><button class="copy-btn" id="copyBtn2" type="button" data-copy-key="form.copy" data-i18n="form.copy" style="margin:0;min-height:32px;padding:6px 10px" data-od-id="contact-copy-btn">copy</button><span aria-hidden="true">·</span><a href="https://linkedin.com" target="_blank" rel="noopener" data-od-id="contact-linkedin">LinkedIn</a></div></div></div>
+</div></section>
+</main>
+</div></div>
+<footer data-od-id="site-footer"><div class="wrap"><div class="f-grid">
+<div class="f-brand" data-od-id="footer-brand"><div class="f-row"><span class="f-badge" aria-hidden="true">L_</span><span><b style="font-family:var(--font-display)">lazarito.dev</b><br/><span class="mono small muted">~/full-stack — dotnet · go · angular · flutter · cloud</span></span></div><span class="pill pill-live" data-i18n="footer.status" data-od-id="footer-status">● open to new projects</span><span class="mono small muted" data-i18n="footer.note">reply &lt; 24h · fixed quote · runbook on every ship</span></div>
+<div class="f-col" data-od-id="footer-nav"><h3 data-i18n="footer.sitemap">Sitemap</h3><a href="#hero">00 <span data-i18n="nav.hero">Hero</span></a><a href="#about">01 <span data-i18n="nav.about">About</span></a><a href="#projects">02 <span data-i18n="nav.projects">Projects</span></a><a href="#stack">03 <span data-i18n="nav.stack">Stack</span></a><a href="#experience">04 <span data-i18n="nav.experience">Experience</span></a><a href="#code">05 <span data-i18n="nav.code">Code</span></a><a href="#contact">06 <span data-i18n="nav.contact">Contact</span></a></div>
+<div class="f-col" data-od-id="footer-socials"><h3 data-i18n="footer.elsewhere">Elsewhere</h3><a href="https://github.com" target="_blank" rel="noopener">GitHub ↗</a><a href="https://linkedin.com" target="_blank" rel="noopener">LinkedIn ↗</a><a href="https://x.com" target="_blank" rel="noopener">X / Twitter ↗</a><a href="https://stackoverflow.com" target="_blank" rel="noopener">Stack Overflow ↗</a><a href="mailto:ariellazaro444@gmail.com">ariellazaro444@gmail.com</a></div>
+<div class="f-top"><a class="f-top-btn" href="#hero" data-i18n-aria="footer.top" aria-label="Back to top" data-od-id="footer-top">↑</a><span class="mono small muted" id="footTime">--:--</span></div>
+</div><div class="foot"><span class="mono small muted">© <span id="year">2026</span> Ariel Lázaro</span></div><div class="giant" aria-hidden="true">FULL<b>—</b>STACK*</div></div></footer>
+<script>
+/* Copy dictionary. Keys are stable; only values change per language.
+   Technical nouns (file names, stack names, commands) stay identical. */
+var I18N={en:{
+"nav.skip":"Skip to content",
+"nav.hero":"Hero","nav.about":"About","nav.projects":"Projects","nav.stack":"Stack","nav.experience":"Experience","nav.code":"Code","nav.contact":"Contact","nav.hire":"Hire me",
+"nav.label":"Sections","nav.menu":"Menu",
+"ctrl.lang":"Language","ctrl.toLight":"Switch to light theme","ctrl.toDark":"Switch to dark theme",
+"status.left":"lazarito.dev — open for new projects",
+"status.right":"remote-first · reply < 24h",
+"railcard.index":"Section index","railcard.status":"● open to new projects","railcard.l2a":"reply < 24h","railcard.l2b":"fixed quote",
+"rail.00":"HERO","rail.01":"ABOUT","rail.02":"PROJECTS","rail.03":"STACK","rail.04":"EXPERIENCE","rail.05":"CODE","rail.06":"CONTACT",
+"hero.eyebrow":"00 · HERO","hero.h1a":"One owner.","hero.h1b":"Every layer.","hero.h1c":"Zero handoffs.",
+"hero.lede.a":"I’m Ariel Lázaro, senior full-stack developer. I ship the slice most teams split across three hires: ",
+"hero.lede.c1":" services, ","hero.lede.c2":" consoles, ","hero.lede.c3":" mobile from one codebase, on ","hero.lede.c4":" with green CI.",
+"hero.cta1":"Open featured projects ↓","hero.cta2":"Get in touch","hero.copy":"copy email",
+"fm.title":"frontmatter","fm.lang":"yaml","fm.role":"full stack software engineer","fm.status":"● currently open for new projects",
+"about.eyebrow":"01 · About me","about.h2a":"The human","about.h2b":"behind the merge.",
+"about.idbadge":"ID // FULL-STACK","about.loc":"UTC-4 · remote-first",
+"about.f1k":"Focus","about.f1v":"vertical slices","about.f2k":"Daily","about.f2v":"C#, Go, TS, Dart, TF",
+"about.f3k":"Off-screen","about.f3v":"trail runs, espresso, zines","about.f4k":"Working style","about.f4v":"async-first, looms over meetings",
+"about.eyebrow2":"Why one owner helps",
+"about.p1":"Split backends drift from frontends; mobile drifts from both. I keep one typed contract from Postgres to Flutter so billing, ops tooling and releases move together. Week-1 audit, fixed quote, runbook + loom on every ship — boring process, exciting reliability.",
+"about.p2":"I do best with one product team, 3–6 months, where API, web and mobile meet the same domain. If it needs a handoff doc to survive, I already wrote it.",
+"about.pr1k":"01 / CONTRACTS","about.pr1v":"OpenAPI-first. No guessing across web ↔ mobile.",
+"about.pr2k":"02 / OFFLINE","about.pr2v":"Queues + tombstones before optimism.",
+"about.pr3k":"03 / RECEIPTS","about.pr3v":"Traces, budgets, previews per PR.",
+"about.elsewhere":"ELSEWHERE —",
+"projects.eyebrow":"02 · Featured projects","projects.h2a":"Case files,","projects.h2b":"not cards.",
+"projects.blurb":"One featured, three ledger entries. Filter by trade — repo + loom on the intro call.",
+"projects.filters":"Filter projects by area","projects.fAll":"all","projects.fBackend":"backend","projects.fFrontend":"frontend","projects.fMobile":"mobile","projects.fCloud":"cloud",
+"projects.count":"showing {n} / {m} files","projects.empty":"No files in this lane — try another filter.",
+"p1.pill":"● live in prod · featured","p1.title":"LedgerFlow — invoicing API + workers",
+"p1.desc":"Multi-tenant billing: .NET ledger + Go PDF/dunning workers. Idempotency keys, RLS per tenant.",
+"p1.link":"Request walkthrough →","p1.note":"openapi.yaml + runbook included",
+"p2.pill":"Frontend + Backend","p2.title":"Dispatch Board","p2.desc":"Angular 18 live board on SignalR over Go + .NET. Audit log included.","p2.link":"Walkthrough →",
+"p3.pill":"Mobile","p3.title":"FieldKit — offline-first","p3.desc":"Flutter for field techs: SQLite queue, resumable uploads, FCM.","p3.link":"Walkthrough →",
+"p4.pill":"Cloud","p4.title":"ShipKit — PR envs","p4.desc":"Every PR gets an ephemeral env with seed data. Gone on merge.","p4.link":"Walkthrough →",
+"stack.eyebrow":"03 · Tech stack & skills","stack.h2a":"Daily, fluent,","stack.h2b":"familiar.",
+"stack.blurb":"Honest tiers — no 97% bars. Tabs show the files I actually touch.",
+"stack.t1":"DAILY DRIVER","stack.t1s1":"APIs + workers","stack.t1s2":"ingest + jobs","stack.t1s3":"consoles","stack.t1s4":"mobile","stack.t1s5":"envs + CI",
+"stack.t2":"FLUENT","stack.t2s1":"tuning","stack.t2s2":"realtime","stack.t2s3":"ship","stack.t2s4":"observe",
+"stack.t3":"FAMILIAR","stack.t3s1":"prod","stack.t3s2":"e2e","stack.t3s3":"release","stack.tabs":"Stack files",
+"exp.eyebrow":"04 · Professional experience","exp.h2a":"git log,","exp.h2b":"not timeline.",
+"exp.blurb":"Checkable roles. Full CV on request.","exp.cv":"Request CV →",
+"exp.c1.date":"2022 → now","exp.c1.role":"Senior full-stack — product teams.","exp.c1.rest":"Billing + ops + mobile. Monthly → weekly trains.",
+"exp.c1.li1":"Split monolith → ledger API + async workers","exp.c1.li2":"Mentored 4 devs on contracts + strict TS",
+"exp.c2.date":"2019 → 2022","exp.c2.role":"Engineer — logistics SaaS.","exp.c2.rest":"C# + Angular admin, Go ingestors.",
+"exp.c2.li1":"EF → partitioned Postgres","exp.c2.li2":"Angular 9 → 15, zero regressions",
+"exp.c3.date":"now","exp.c3.role":"open to new projects:","exp.c3.rest":"async-first · audit → fixed quote → runbook + loom",
+"code.eyebrow":"05 · Code & contributions","code.h2a":"Commits over","code.h2b":"claims.",
+"code.blurb":"Sketch of cadence + selected repos. Private client work demoed on call — links on request.",
+"code.heat":"Activity sketch*","code.heat.aria":"Illustrative contribution activity: a few dense weeks among quieter ones.",
+"code.heatnote":"* illustrative rhythm, real graph on GitHub","code.less":"less","code.more":"more",
+"r1.pill":"template","r1.desc":"EF Core outbox + MassTransit worker with idempotency tests and compose file.","r1.note":"docs + tests",
+"r2.pill":"worker","r2.desc":"Resumable queue worker: pgx listen/notify, graceful drain, Otel spans.","r2.note":"runbook included",
+"r3.pill":"schematic","r3.desc":"Generate strict Angular signals + services from OpenAPI. No any, strict on.","r3.note":"schematic",
+"r4.pill":"package","r4.desc":"SQLite tombstone queue + FCM topic helper with offline demo app.","r4.note":"demo app",
+"r5.pill":"module","r5.desc":"Ephemeral PR envs on Container Apps with seeded DB + auto-destroy.","r5.note":"module",
+"contact.eyebrow":"06 · Contact","contact.h2a":"Let's build","contact.h2b":"together.",
+"contact.blurb":"Tell me about your project. 24h reply with scope + fixed quote.",
+"form.name":"Your name","form.nameErr":"Add your name.","form.email":"Contact email","form.emailErr":"That email looks off.",
+"form.type":"What do you need?","form.o1":"full-slice: api + web + mobile","form.o2":"backend: .NET / Go","form.o3":"frontend: Angular","form.o4":"mobile: Flutter","form.o5":"infra: cloud + CI",
+"form.msg":"About your project","form.msgErr":"20+ chars so I can quote.","form.phMsg":"What? Stack today? Ship date?",
+"form.send":"Send message →","form.sending":"Sending…","form.sent":"Sent ✓ — talk soon","form.fix":"Please fix the highlighted fields.",
+"form.ok":"✓ Message sent — reply in 24h. (Demo: nothing sent.)",
+"form.pvTitle":"Your message","form.pvFrom":"Message from","form.pvBody":"What? Stack today? Ship date? — type left, watch it render here.",
+"form.copy":"copy","form.copied":"copied ✓","form.copyFail":"copy failed",
+"footer.sitemap":"Sitemap","footer.elsewhere":"Elsewhere","footer.status":"● open to new projects",
+"footer.note":"reply < 24h · fixed quote · runbook on every ship","footer.top":"Back to top",
+"footer.local":"local"
+}};
+I18N.es={
+"nav.skip":"Saltar al contenido",
+"nav.hero":"Inicio","nav.about":"Sobre mí","nav.projects":"Proyectos","nav.stack":"Stack","nav.experience":"Experiencia","nav.code":"Código","nav.contact":"Contacto","nav.hire":"Contrátame",
+"nav.label":"Secciones","nav.menu":"Menú",
+"ctrl.lang":"Idioma","ctrl.toLight":"Cambiar a tema claro","ctrl.toDark":"Cambiar a tema oscuro",
+"status.left":"lazarito.dev — abierto a nuevos proyectos",
+"status.right":"remoto · respuesta < 24 h",
+"railcard.index":"Índice de secciones","railcard.status":"● abierto a nuevos proyectos","railcard.l2a":"respuesta < 24 h","railcard.l2b":"presupuesto fijo",
+"rail.00":"INICIO","rail.01":"SOBRE MÍ","rail.02":"PROYECTOS","rail.03":"STACK","rail.04":"EXPERIENCIA","rail.05":"CÓDIGO","rail.06":"CONTACTO",
+"hero.eyebrow":"00 · HERO","hero.h1a":"Un dueño.","hero.h1b":"Todas las capas.","hero.h1c":"Cero traspasos.",
+"hero.lede.a":"Soy Ariel Lázaro, desarrollador full-stack senior. Entrego la parte que la mayoría de los equipos reparte en tres contrataciones: ",
+"hero.lede.c1":" servicios, ","hero.lede.c2":" consolas, ","hero.lede.c3":" móvil desde un solo código, sobre ","hero.lede.c4":" con CI en verde.",
+"hero.cta1":"Ver proyectos ↓","hero.cta2":"Hablemos","hero.copy":"copiar email",
+"fm.title":"frontmatter","fm.lang":"yaml","fm.role":"ingeniero full stack","fm.status":"● abierto a nuevos proyectos",
+"about.eyebrow":"01 · Sobre mí","about.h2a":"La persona","about.h2b":"detrás del merge.",
+"about.idbadge":"ID // FULL-STACK","about.loc":"UTC-4 · trabajo remoto",
+"about.f1k":"Foco","about.f1v":"slices verticales","about.f2k":"A diario","about.f2v":"C#, Go, TS, Dart, TF",
+"about.f3k":"Fuera del código","about.f3v":"trail running, espresso, fanzines","about.f4k":"Forma de trabajo","about.f4v":"asíncrono, loom antes que reuniones",
+"about.eyebrow2":"Por qué ayuda un solo dueño",
+"about.p1":"Los backends divididos se desincronizan de los frontends; el móvil, de ambos. Mantengo un contrato tipado de Postgres a Flutter para que facturación, tooling de ops y releases avancen juntos. Auditoría en la semana 1, presupuesto fijo, runbook + loom en cada entrega — proceso aburrido, confiabilidad emocionante.",
+"about.p2":"Funciono mejor con un solo equipo de producto, 3–6 meses, donde API, web y móvil tocan el mismo dominio. Si necesita un documento de traspaso para sobrevivir, ya lo escribí.",
+"about.pr1k":"01 / CONTRATOS","about.pr1v":"OpenAPI primero. Sin adivinar entre web ↔ móvil.",
+"about.pr2k":"02 / OFFLINE","about.pr2v":"Colas y tombstones antes que optimismo.",
+"about.pr3k":"03 / EVIDENCIA","about.pr3v":"Trazas, presupuestos y previews por PR.",
+"about.elsewhere":"TAMBIÉN EN —",
+"projects.eyebrow":"02 · Proyectos","projects.h2a":"Expedientes,","projects.h2b":"no tarjetas.",
+"projects.blurb":"Uno destacado y tres entradas. Filtrá por área — repo + loom en la llamada.",
+"projects.filters":"Filtrar proyectos por área","projects.fAll":"todos","projects.fBackend":"backend","projects.fFrontend":"frontend","projects.fMobile":"móvil","projects.fCloud":"cloud",
+"projects.count":"mostrando {n} / {m} archivos","projects.empty":"Sin archivos en esta área — probá otro filtro.",
+"p1.pill":"● en producción · destacado","p1.title":"LedgerFlow — API de facturación + workers",
+"p1.desc":"Facturación multi-tenant: ledger en .NET + workers de PDF y cobranza en Go. Claves de idempotencia, RLS por tenant.",
+"p1.link":"Pedir walkthrough →","p1.note":"incluye openapi.yaml + runbook",
+"p2.pill":"Frontend + Backend","p2.title":"Dispatch Board","p2.desc":"Tablero en vivo con Angular 18 y SignalR sobre Go + .NET. Incluye log de auditoría.","p2.link":"Ver más →",
+"p3.pill":"Móvil","p3.title":"FieldKit — offline-first","p3.desc":"Flutter para técnicos de campo: cola SQLite, subidas reanudables, FCM.","p3.link":"Ver más →",
+"p4.pill":"Cloud","p4.title":"ShipKit — entornos por PR","p4.desc":"Cada PR tiene un entorno efímero con datos semilla. Muere al mergear.","p4.link":"Ver más →",
+"stack.eyebrow":"03 · Stack y skills","stack.h2a":"A diario, fluido,","stack.h2b":"familiar.",
+"stack.blurb":"Niveles honestos — sin barras de 97%. Las pestañas muestran los archivos que toco de verdad.",
+"stack.t1":"USO DIARIO","stack.t1s1":"APIs + workers","stack.t1s2":"ingesta + jobs","stack.t1s3":"consolas","stack.t1s4":"móvil","stack.t1s5":"entornos + CI",
+"stack.t2":"FLUIDO","stack.t2s1":"tuning","stack.t2s2":"tiempo real","stack.t2s3":"despliegue","stack.t2s4":"observabilidad",
+"stack.t3":"FAMILIAR","stack.t3s1":"prod","stack.t3s2":"e2e","stack.t3s3":"publicar","stack.tabs":"Archivos del stack",
+"exp.eyebrow":"04 · Experiencia","exp.h2a":"git log,","exp.h2b":"no una línea de tiempo.",
+"exp.blurb":"Roles verificables. CV completo a pedido.","exp.cv":"Pedir CV →",
+"exp.c1.date":"2022 → hoy","exp.c1.role":"Senior full-stack — equipos de producto.","exp.c1.rest":"Facturación + ops + móvil. Entregas mensuales → semanales.",
+"exp.c1.li1":"Dividí el monolito en API ledger + workers asíncronos","exp.c1.li2":"Mentoricé a 4 devs en contratos y TS estricto",
+"exp.c2.date":"2019 → 2022","exp.c2.role":"Ingeniero — SaaS de logística.","exp.c2.rest":"Admin en C# + Angular, ingesta en Go.",
+"exp.c2.li1":"EF → Postgres particionado","exp.c2.li2":"Angular 9 → 15, cero regresiones",
+"exp.c3.date":"hoy","exp.c3.role":"abierto a nuevos proyectos:","exp.c3.rest":"asíncrono · auditoría → presupuesto fijo → runbook + loom",
+"code.eyebrow":"05 · Código y aportes","code.h2a":"Commits antes que","code.h2b":"promesas.",
+"code.blurb":"Boceto de ritmo y repos elegidos. El trabajo privado se muestra en llamada — links a pedido.",
+"code.heat":"Boceto de actividad*","code.heat.aria":"Actividad de contribución ilustrativa: algunas semanas densas entre otras más tranquilas.",
+"code.heatnote":"* ritmo ilustrativo, el gráfico real está en GitHub","code.less":"menos","code.more":"más",
+"r1.pill":"plantilla","r1.desc":"Outbox de EF Core + worker de MassTransit con tests de idempotencia y compose.","r1.note":"docs + tests",
+"r2.pill":"worker","r2.desc":"Worker de cola reanudable: pgx listen/notify, drenado limpio, spans de Otel.","r2.note":"incluye runbook",
+"r3.pill":"schematic","r3.desc":"Genera signals y servicios estrictos de Angular desde OpenAPI. Sin any, strict on.","r3.note":"schematic",
+"r4.pill":"paquete","r4.desc":"Cola SQLite con tombstones + helper de topics FCM y app de demo offline.","r4.note":"app demo",
+"r5.pill":"módulo","r5.desc":"Entornos efímeros por PR en Container Apps con DB sembrada y autodestrucción.","r5.note":"módulo",
+"contact.eyebrow":"06 · Contacto","contact.h2a":"Construyamos","contact.h2b":"juntos.",
+"contact.blurb":"Contame de tu proyecto. Respuesta en 24 h con alcance y presupuesto fijo.",
+"form.name":"Tu nombre","form.nameErr":"Escribí tu nombre.","form.email":"Email de contacto","form.emailErr":"Ese email no parece válido.",
+"form.type":"¿Qué necesitás?","form.o1":"full-slice: api + web + móvil","form.o2":"backend: .NET / Go","form.o3":"frontend: Angular","form.o4":"mobile: Flutter","form.o5":"infra: cloud + CI",
+"form.msg":"Sobre tu proyecto","form.msgErr":"20+ caracteres para poder cotizar.","form.phMsg":"¿Qué? ¿Stack actual? ¿Fecha de entrega?",
+"form.send":"Enviar mensaje →","form.sending":"Enviando…","form.sent":"Enviado ✓ — hablamos","form.fix":"Revisá los campos marcados.",
+"form.ok":"✓ Mensaje enviado — respuesta en 24 h. (Demo: no se envió nada.)",
+"form.pvTitle":"Tu mensaje","form.pvFrom":"Mensaje de","form.pvBody":"¿Qué? ¿Stack actual? ¿Fecha de entrega? — escribí a la izquierda y se ve acá.",
+"form.copy":"copiar","form.copied":"copiado ✓","form.copyFail":"no se pudo copiar",
+"footer.sitemap":"Mapa","footer.elsewhere":"También en","footer.status":"● abierto a nuevos proyectos",
+"footer.note":"respuesta < 24 h · presupuesto fijo · runbook en cada entrega","footer.top":"Volver arriba",
+"footer.local":"hora local"
+};
+(function(){
+var root=document.documentElement;
+var lang=root.getAttribute('data-lang')==='es'?'es':'en';
+var theme=root.getAttribute('data-theme')==='light'?'light':'dark';
+var sent=false;
+function t(k){var d=I18N[lang];var v=d&&d[k];if(v==null)v=I18N.en[k];return v==null?'':v;}
+function each(sel,fn){Array.prototype.forEach.call(document.querySelectorAll(sel),fn);}
+/* ---------- theme ---------- */
+var themeBtn=document.getElementById('themeBtn');
+function paintTheme(){
+  each('[data-theme-icon]',function(el){el.style.display=el.getAttribute('data-theme-icon')===theme?'':'none';});
+  var m=document.getElementById('themeColor');
+  if(m)m.setAttribute('content',theme==='light'?'#f7f7f9':'#141419');
+  if(themeBtn){
+    var label=t(theme==='dark'?'ctrl.toLight':'ctrl.toDark');
+    themeBtn.setAttribute('aria-checked',theme==='dark'?'true':'false');
+    themeBtn.setAttribute('aria-label',label);
+    themeBtn.setAttribute('title',label);
+  }
+}
+function setTheme(next,persist){
+  theme=next==='light'?'light':'dark';
+  root.setAttribute('data-theme',theme);
+  if(persist){try{localStorage.setItem('al.theme',theme);}catch(e){}}
+  paintTheme();
+}
+if(themeBtn)themeBtn.addEventListener('click',function(){setTheme(theme==='dark'?'light':'dark',true);});
+if(window.matchMedia){
+  try{window.matchMedia('(prefers-color-scheme: light)').addEventListener('change',function(e){
+    var saved=null;try{saved=localStorage.getItem('al.theme');}catch(err){}
+    if(!saved)setTheme(e.matches?'light':'dark',false);
+  });}catch(e){}
+}
+/* ---------- i18n ---------- */
+var langBtns=Array.prototype.slice.call(document.querySelectorAll('.lang button'));
+var photoImg=document.getElementById('photoImg');
+if(photoImg){photoImg.addEventListener('error',function(){photoImg.style.display='none';});}
+function setLang(next,persist){
+  lang=next==='es'?'es':'en';
+  root.setAttribute('data-lang',lang);root.lang=lang;
+  if(persist){try{localStorage.setItem('al.lang',lang);}catch(e){}}
+  each('[data-i18n]',function(el){var v=t(el.getAttribute('data-i18n'));if(v)el.textContent=v;});
+  each('[data-i18n-ph]',function(el){el.setAttribute('placeholder',t(el.getAttribute('data-i18n-ph')));});
+  each('[data-i18n-aria]',function(el){var v=t(el.getAttribute('data-i18n-aria'));if(v)el.setAttribute('aria-label',v);});
+  each('a[data-href-en][data-href-es]',function(el){var href=el.getAttribute('data-href-'+lang)||el.getAttribute('data-href-en');if(href)el.setAttribute('href',href);});
+  langBtns.forEach(function(b){b.setAttribute('aria-pressed',b.getAttribute('data-lang')===lang?'true':'false');});
+  paintTheme();updateCount();renderPreview();resetSubmit();clock();
+}
+langBtns.forEach(function(b){b.addEventListener('click',function(){setLang(b.getAttribute('data-lang'),true);});});
+/* ---------- mobile menu ---------- */
+var nav=document.getElementById('navLinks'),menu=document.getElementById('menuBtn');
+function menuClose(){if(!nav||!menu)return;nav.classList.remove('open');menu.setAttribute('aria-expanded','false');}
+if(menu&&nav){
+  menu.addEventListener('click',function(){var open=nav.classList.toggle('open');menu.setAttribute('aria-expanded',open?'true':'false');});
+  nav.addEventListener('click',function(e){if(e.target.closest('a'))menuClose();});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')menuClose();});
+  document.addEventListener('click',function(e){if(nav.classList.contains('open')&&!e.target.closest('.nav'))menuClose();});
+}
+/* ---------- project filters ---------- */
+var filterBtns=Array.prototype.slice.call(document.querySelectorAll('.filter-btn'));
+var cards=Array.prototype.slice.call(document.querySelectorAll('#workGrid .case'));
+var countEl=document.getElementById('workCount'),emptyEl=document.getElementById('workEmpty');
+var shown=cards.length;
+function updateCount(){
+  if(!countEl)return;
+  countEl.textContent=t('projects.count').replace('{n}',String(shown)).replace('{m}',String(cards.length));
+}
+function applyFilter(f){
+  var n=0;
+  cards.forEach(function(c){
+    var ok=(f==='all'||(c.getAttribute('data-lanes')||'').split(' ').indexOf(f)>-1);
+    c.style.display=ok?'':'none';
+    if(ok)n++;
+  });
+  shown=n;
+  if(emptyEl)emptyEl.hidden=n>0;
+  updateCount();
+}
+filterBtns.forEach(function(b){
+  b.addEventListener('click',function(){
+    filterBtns.forEach(function(x){x.setAttribute('aria-pressed','false');});
+    b.setAttribute('aria-pressed','true');
+    applyFilter(b.getAttribute('data-filter'));
+  });
+});
+/* ---------- stack tabs (roving tabindex + arrow keys) ---------- */
+var tabs=Array.prototype.slice.call(document.querySelectorAll('[role="tab"]'));
+var panes=Array.prototype.slice.call(document.querySelectorAll('[data-pane]'));
+function selectTab(i){
+  tabs.forEach(function(x,j){var on=i===j;x.setAttribute('aria-selected',on?'true':'false');x.tabIndex=on?0:-1;});
+  panes.forEach(function(p,j){
+    var on=i===j;
+    p.classList.toggle('active',on);
+    if(on)p.removeAttribute('hidden');else p.setAttribute('hidden','');
+  });
+}
+tabs.forEach(function(tab,i){
+  tab.addEventListener('click',function(){selectTab(i);});
+  tab.addEventListener('keydown',function(e){
+    var n=null;
+    if(e.key==='ArrowRight')n=(i+1)%tabs.length;
+    else if(e.key==='ArrowLeft')n=(i-1+tabs.length)%tabs.length;
+    else if(e.key==='Home')n=0;
+    else if(e.key==='End')n=tabs.length-1;
+    if(n!==null){e.preventDefault();tabs[n].focus();selectTab(n);}
+  });
+});
+/* ---------- copy to clipboard ---------- */
+var copyStatus=document.getElementById('copyStatus');
+function copyText(text,btn){
+  var key=btn.getAttribute('data-copy-key')||'form.copy';
+  function done(ok){
+    btn.textContent=t(ok?'form.copied':'form.copyFail');
+    if(copyStatus)copyStatus.textContent=(ok?t('form.copied'):t('form.copyFail'))+': '+text;
+    setTimeout(function(){btn.textContent=t(key);if(copyStatus)copyStatus.textContent='';},1800);
+  }
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(function(){done(true);},function(){done(false);});
+    return;
+  }
+  var ta=document.createElement('textarea');ta.value=text;ta.setAttribute('readonly','');
+  ta.style.position='absolute';ta.style.left='-9999px';
+  document.body.appendChild(ta);ta.select();
+  var ok=false;try{ok=document.execCommand('copy');}catch(e){}
+  document.body.removeChild(ta);done(ok);
+}
+each('.copy-btn',function(b){
+  b.setAttribute('aria-live','polite');
+  b.addEventListener('click',function(){copyText('ariellazaro444@gmail.com',b);});
+});
+/* ---------- contact form ---------- */
+var form=document.getElementById('contactForm');
+var nEl=document.getElementById('fName'),eEl=document.getElementById('fEmail');
+var mEl=document.getElementById('fMsg'),tEl=document.getElementById('fType');
+var okBox=document.getElementById('formOk'),formStatus=document.getElementById('formStatus');
+var submitBtn=form?form.querySelector('[type="submit"]'):null;
+var EMAIL=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+var rules=[[nEl,'eName',function(v){return v.trim().length>=2;}],
+           [eEl,'eEmail',function(v){return EMAIL.test(v.trim());}],
+           [mEl,'eMsg',function(v){return v.trim().length>=20;}]];
+function flagField(inp,errId,bad){
+  var er=document.getElementById(errId);
+  if(er)er.style.display=bad?'block':'none';
+  inp.setAttribute('aria-invalid',bad?'true':'false');
+}
+function resetSubmit(){if(submitBtn)submitBtn.textContent=sent?t('form.sent'):t('form.send');}
+function renderPreview(){
+  var pvT=document.getElementById('pvTitle'),pvB=document.getElementById('pvBody'),pvL=document.getElementById('pvLabel');
+  if(!pvT||!nEl)return;
+  pvL.textContent=tEl.value;
+  pvT.textContent=t('form.pvFrom')+' '+(nEl.value.trim()||'Ada Lovelace');
+  pvB.textContent=(mEl.value.trim()||t('form.pvBody'))+' — '+(eEl.value.trim()||'ada@company.com');
+}
+if(form&&nEl){
+  rules.forEach(function(r){
+    r[0].addEventListener('input',function(){
+      if(r[0].getAttribute('aria-invalid')==='true')flagField(r[0],r[1],!r[2](r[0].value));
+    });
+  });
+  [nEl,eEl,mEl].forEach(function(i){i.addEventListener('input',renderPreview);});
+  tEl.addEventListener('change',renderPreview);
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var bad=null;
+    rules.forEach(function(r){
+      var isBad=!r[2](r[0].value);
+      flagField(r[0],r[1],isBad);
+      if(isBad&&!bad)bad=r[0];
+    });
+    if(bad){
+      okBox.style.display='none';
+      if(formStatus)formStatus.textContent=t('form.fix');
+      bad.focus();
+      return;
+    }
+    if(formStatus)formStatus.textContent='';
+    submitBtn.disabled=true;
+    submitBtn.setAttribute('aria-busy','true');
+    submitBtn.textContent=t('form.sending');
+    setTimeout(function(){
+      submitBtn.disabled=false;
+      submitBtn.removeAttribute('aria-busy');
+      sent=true;resetSubmit();
+      okBox.style.display='block';
+    },900);
+  });
+  renderPreview();
+}
+/* ---------- decorative activity grid ---------- */
+var heat=document.getElementById('heatCells');
+if(heat){
+  var lv=[0,0,1,0,2,1,0,0,3,2,1,0,0,1,2,0,0,0,1,3,2,1,0,0,1,0,2,1,0,3,1,2,0,0,1,0,0,2,1,0,0,1,2,3,1,0,0,0,1,2,0,1,0,0,3,2,0,1,0,0,1,2,0,0,1,0,2,1,3,0,0,1,0,0,2,1,0,0,3,2,1,0,0,1,0,2,0,1,0,0,3,1,2,0,0,1,0,0,2,1,0,0,1,3];
+  var frag=document.createDocumentFragment();
+  for(var i=0;i<104;i++){
+    var s=document.createElement('i');
+    var v=lv[i%lv.length];
+    if(v===1)s.className='l1';else if(v===2)s.className='l2';else if(v===3)s.className='l3';
+    frag.appendChild(s);
+  }
+  heat.appendChild(frag);
+}
+/* ---------- reveal on scroll ---------- */
+if('IntersectionObserver' in window){
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(en){if(en.isIntersecting){en.target.classList.add('on');io.unobserve(en.target);}});
+  },{threshold:.1});
+  each('.reveal',function(el){io.observe(el);});
+}else{each('.reveal',function(el){el.classList.add('on');});}
+/* ---------- scroll spy ---------- */
+var railLinks=Array.prototype.slice.call(document.querySelectorAll('#railNav a'));
+var topLinks=Array.prototype.slice.call(document.querySelectorAll('.nav-links a'));
+var secs=['hero','about','projects','stack','experience','code','contact']
+  .map(function(id){return document.getElementById(id);}).filter(Boolean);
+if('IntersectionObserver' in window){
+  var so=new IntersectionObserver(function(es){
+    es.forEach(function(en){
+      if(!en.isIntersecting)return;
+      var id='#'+en.target.id;
+      railLinks.forEach(function(a){var on=a.getAttribute('href')===id;a.classList.toggle('active',on);if(on)a.setAttribute('aria-current','true');else a.removeAttribute('aria-current');});
+      topLinks.forEach(function(a){a.classList.toggle('active',a.getAttribute('href')===id);});
+    });
+  },{rootMargin:'-30% 0px -60% 0px'});
+  secs.forEach(function(s){so.observe(s);});
+}
+/* ---------- footer clock ---------- */
+var ft=document.getElementById('footTime');
+function clock(){
+  if(!ft)return;
+  try{ft.textContent=new Date().toLocaleTimeString(lang==='es'?'es-ES':'en-US',{hour:'2-digit',minute:'2-digit'})+' '+t('footer.local');}catch(e){}
+}
+var yr=document.getElementById('year');
+if(yr)yr.textContent=String(new Date().getFullYear());
+setInterval(clock,30000);
+/* ---------- boot ---------- */
+paintTheme();
+setLang(lang,false);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+---
+import Layout from "../layouts/Layout.astro";
+import StatusBar from "../components/StatusBar.astro";
+import Nav from "../components/Nav.astro";
+import Rail from "../components/Rail.astro";
+import Hero from "../components/Hero.astro";
+import About from "../components/About.astro";
+import Projects from "../components/Projects.astro";
+import Stack from "../components/Stack.astro";
+import Experience from "../components/Experience.astro";
+import Code from "../components/Code.astro";
+import Contact from "../components/Contact.astro";
+import Footer from "../components/Footer.astro";
+---
+
+<Layout
+  title="Ariel Lázaro — Full-Stack Developer (.NET, Go, Angular, Flutter, Cloud)"
+  description="Ariel Lázaro, senior full-stack engineer. ASP.NET Core, Go, Angular, Flutter and cloud infra in one pair of hands: APIs, web, mobile and Terraform with green CI."
+>
+  <StatusBar />
+  <Nav />
+
+  <div class="wrap">
+    <div class="shell">
+      <Rail />
+
+      <main class="content" id="main">
+        <Hero />
+        <About />
+        <Projects />
+        <Stack />
+        <Experience />
+        <Code />
+        <Contact />
+      </main>
+    </div>
+  </div>
+
+  <Footer />
+</Layout>

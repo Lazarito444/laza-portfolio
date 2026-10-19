@@ -1,0 +1,60 @@
+---
+import { en } from "../data/i18n";
+
+const t = en;
+---
+
+<section class="sec pt-2.5" id="hero">
+  <div data-od-id="hero-intro">
+    <span class="eyebrow" data-i18n="hero.eyebrow" data-od-id="hero-eyebrow">{t("hero.eyebrow")}</span>
+
+    <h1 data-od-id="hero-headline" class="mt-3">
+      <span data-i18n="hero.h1a">{t("hero.h1a")}</span><br />
+      <span data-i18n="hero.h1b">{t("hero.h1b")}</span> <em data-i18n="hero.h1c">{t("hero.h1c")}</em>
+    </h1>
+
+    <div class="readme-head mt-[18px]">
+      <div>
+        <p class="lede" data-od-id="hero-lede">
+          <span data-i18n="hero.lede.a">{t("hero.lede.a")}</span>
+          <b>ASP.NET Core + Go</b>
+          <span data-i18n="hero.lede.c1">{t("hero.lede.c1")}</span>
+          <b>Angular</b>
+          <span data-i18n="hero.lede.c2">{t("hero.lede.c2")}</span>
+          <b>Flutter</b>
+          <span data-i18n="hero.lede.c3">{t("hero.lede.c3")}</span>
+          <b>Azure/GCP + Terraform</b>
+          <span data-i18n="hero.lede.c4">{t("hero.lede.c4")}</span>
+        </p>
+
+        <div class="hero-actions">
+          <a class="btn btn-lime" href="#projects" data-i18n="hero.cta1" data-od-id="hero-cta-work">{t("hero.cta1")}</a>
+          <a class="btn" href="#contact" data-i18n="hero.cta2" data-od-id="hero-cta-contact">{t("hero.cta2")}</a>
+        </div>
+      </div>
+
+      <div class="frontmatter" data-od-id="hero-frontmatter">
+        <div class="fm-bar">
+          <span data-i18n="fm.title">{t("fm.title")}</span>
+          <span data-i18n="fm.lang">{t("fm.lang")}</span>
+        </div>
+        <div class="fm-body">
+          <span class="k">role:</span> <b data-i18n="fm.role">{t("fm.role")}</b><br />
+          <span class="k">backend:</span> dotnet, go<br />
+          <span class="k">frontend:</span> angular, astro<br />
+          <span class="k">mobile:</span> flutter<br />
+          <span class="k">infra:</span> cloud, azure, aws<br />
+          <span class="k">status:</span> <b class="text-accent" data-i18n="fm.status">{t("fm.status")}</b>
+        </div>
+      </div>
+    </div>
+
+    <div class="runbar" data-od-id="hero-terminal">
+      <span class="prompt" aria-hidden="true">$</span>
+      <span>hire lazarito --scope "api + web + mobile" --start "as soon as possible"</span>
+      <button class="copy-btn" id="copyBtn" type="button" data-copy-key="hero.copy" data-i18n="hero.copy" data-od-id="copy-email-btn">{t("hero.copy")}</button>
+    </div>
+
+    <span class="sr" id="copyStatus" role="status" aria-live="polite"></span>
+  </div>
+</section>

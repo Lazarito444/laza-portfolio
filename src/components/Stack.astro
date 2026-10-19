@@ -1,0 +1,60 @@
+---
+import { en } from "../data/i18n";
+import { tiers } from "../data/stack";
+
+const t = en;
+---
+
+<section class="sec" id="stack">
+  <div class="sec-top">
+    <div data-od-id="toolbox-heading">
+      <span class="eyebrow" data-i18n="stack.eyebrow">{t("stack.eyebrow")}</span>
+      <h2><span data-i18n="stack.h2a">{t("stack.h2a")}</span> <em data-i18n="stack.h2b">{t("stack.h2b")}</em></h2>
+      <p data-i18n="stack.blurb">{t("stack.blurb")}</p>
+    </div>
+  </div>
+
+  <div class="tiers">
+    {tiers.map((tier) => (
+      <div class="tier reveal" data-od-id={tier.id}>
+        <h3>
+          {tier.accent ? <b aria-hidden="true">●</b> : " "}<span data-i18n={tier.titleKey}>{t(tier.titleKey)}</span>
+        </h3>
+        {tier.skills.map((s) => (
+          <div class="skill">
+            <span>{s.name}</span>
+            <span data-i18n={s.noteKey}>{t(s.noteKey)}</span>
+          </div>
+        ))}
+      </div>
+    ))}
+  </div>
+
+  <div class="fileview" data-od-id="stack-viewer">
+    <div class="filetabs" role="tablist" data-i18n-aria="stack.tabs" aria-label={t("stack.tabs")} data-od-id="stack-tabs">
+      <button type="button" role="tab" id="tabDotnet" aria-selected="true" aria-controls="paneDotnet" tabindex="0" data-tab="dotnet" data-od-id="tab-dotnet">billing.csproj</button>
+      <button type="button" role="tab" id="tabGo" aria-selected="false" aria-controls="paneGo" tabindex="-1" data-tab="go" data-od-id="tab-go">go.mod</button>
+      <button type="button" role="tab" id="tabNg" aria-selected="false" aria-controls="paneNg" tabindex="-1" data-tab="ng" data-od-id="tab-ng">invoices.component.ts</button>
+      <button type="button" role="tab" id="tabFl" aria-selected="false" aria-controls="paneFl" tabindex="-1" data-tab="fl" data-od-id="tab-fl">pubspec.yaml</button>
+      <button type="button" role="tab" id="tabTf" aria-selected="false" aria-controls="paneTf" tabindex="-1" data-tab="tf" data-od-id="tab-tf">main.tf</button>
+    </div>
+
+    <div class="codepane active" role="tabpanel" id="paneDotnet" aria-labelledby="tabDotnet" tabindex="0" data-pane="dotnet">
+      <span class="t-dim">&lt;!-- EF Core · MassTransit --&gt;</span><br />
+      <span class="t-cyan">&lt;PackageReference</span> Include="Microsoft.EntityFrameworkCore" Version="8.0.*" /<span class="t-cyan">&gt;</span><br />
+      outbox → worker → idempotent handler
+    </div>
+    <div class="codepane" role="tabpanel" id="paneGo" aria-labelledby="tabGo" tabindex="0" data-pane="go" hidden>
+      module ledger/worker<br />require github.com/jackc/pgx/v5 <span class="t-lime">v5.5.0</span> <span class="t-dim">// p95 84ms</span>
+    </div>
+    <div class="codepane" role="tabpanel" id="paneNg" aria-labelledby="tabNg" tabindex="0" data-pane="ng" hidden>
+      <span class="t-cyan">export class</span> InvoicesComponent &#123; invoices = <span class="t-cyan">signal</span>([]) &#125; <span class="t-dim">// no any</span>
+    </div>
+    <div class="codepane" role="tabpanel" id="paneFl" aria-labelledby="tabFl" tabindex="0" data-pane="fl" hidden>
+      flutter_riverpod: <span class="t-lime">^2.4.0</span> <span class="t-dim"># offline queue</span>
+    </div>
+    <div class="codepane" role="tabpanel" id="paneTf" aria-labelledby="tabTf" tabindex="0" data-pane="tf" hidden>
+      module "preview_env" &#123; ttl = <span class="t-lime">"48h"</span> &#125; <span class="t-dim"># destroyed on merge</span>
+    </div>
+  </div>
+</section>

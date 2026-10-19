@@ -1,0 +1,43 @@
+---
+import { en } from "../data/i18n";
+import { repos } from "../data/repos";
+import { SOCIAL } from "../data/socials";
+
+const t = en;
+---
+
+<section class="sec" id="code">
+  <div class="sec-top">
+    <div data-od-id="code-heading">
+      <span class="eyebrow" data-i18n="code.eyebrow">{t("code.eyebrow")}</span>
+      <h2><span data-i18n="code.h2a">{t("code.h2a")}</span> <em data-i18n="code.h2b">{t("code.h2b")}</em></h2>
+      <p data-i18n="code.blurb">{t("code.blurb")}</p>
+    </div>
+    <a class="link-btn" href={SOCIAL.github} target="_blank" rel="noopener" data-od-id="code-github">GitHub ↗</a>
+  </div>
+
+  <div class="contrib-grid">
+    <div class="heat reveal" data-od-id="contrib-heat">
+      <span class="eyebrow" data-i18n="code.heat">{t("code.heat")}</span>
+      <div class="cells" id="heatCells" aria-hidden="true"></div>
+      <span class="sr" data-i18n="code.heat.aria">{t("code.heat.aria")}</span>
+      <div class="mono small muted flex justify-between gap-2.5">
+        <span data-i18n="code.heatnote">{t("code.heatnote")}</span>
+        <span><span data-i18n="code.less">{t("code.less")}</span> ■■■■ <span data-i18n="code.more">{t("code.more")}</span></span>
+      </div>
+    </div>
+
+    <div class="repos">
+      {repos.map((r) => (
+        <div class="repo reveal" data-od-id={r.id}>
+          <div class="repo-top">
+            <h3>{r.name}</h3>
+            <span class="pill" data-i18n={r.pillKey}>{t(r.pillKey)}</span>
+          </div>
+          <p data-i18n={r.descKey}>{t(r.descKey)}</p>
+          <div class="langdot"><i style={`background:${r.color}`} aria-hidden="true"></i>{r.lang} · <span data-i18n={r.noteKey}>{t(r.noteKey)}</span></div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
