@@ -255,6 +255,7 @@ const msgEl = document.getElementById("fMsg") as HTMLTextAreaElement | null;
 const typeEl = document.getElementById("fType") as HTMLSelectElement | null;
 const okBox = document.getElementById("formOk");
 const formStatus = document.getElementById("formStatus");
+const fallbackEl = document.getElementById("mailtoFallback") as HTMLAnchorElement | null;
 const submitBtn = form?.querySelector<HTMLButtonElement>('[type="submit"]') ?? null;
 
 type Rule = [field: HTMLInputElement | HTMLTextAreaElement, errorId: string, valid: (value: string) => boolean];
@@ -272,6 +273,25 @@ function flagField(field: HTMLInputElement | HTMLTextAreaElement, errorId: strin
 
 function resetSubmit(): void {
   if (submitBtn) submitBtn.textContent = sent ? t("form.sent") : t("form.send");
+}
+
+/** On send failure: arm a pre-filled mailto: so nothing typed is lost. */
+function showFallback(): void {
+  if (!fallbackEl || !nameEl || !emailEl || !msgEl || !typeEl) return;
+  const body = [
+    msgEl.value.trim(),
+    "",
+    "Reply to: " + emailEl.value.trim(),
+    "Type: " + typeEl.value,
+  ].join("\n");
+  fallbackEl.href = "mailto:" + CONTACT_EMAIL
+    + "?subject=" + encodeURIComponent("Portfolio contact - " + nameEl.value.trim())
+    + "&body=" + encodeURIComponent(body);
+  fallbackEl.hidden = false;
+}
+
+function hideFallback(): void {
+  if (fallbackEl) fallbackEl.hidden = true;
 }
 
 function renderPreview(): void {
@@ -336,14 +356,17 @@ if (form && nameEl && emailEl && msgEl && typeEl) {
       if (res.ok) {
         sent = true;
         resetSubmit();
+        hideFallback();
         if (okBox) okBox.style.display = "block";
       } else {
         const data = await res.json().catch(() => null);
         console.error("Form submission failed:", data);
         if (formStatus) formStatus.textContent = t("form.fail");
+        showFallback();
       }
     } catch {
       if (formStatus) formStatus.textContent = t("form.fail");
+      showFallback();
     } finally {
       if (submitBtn) {
         submitBtn.disabled = false;

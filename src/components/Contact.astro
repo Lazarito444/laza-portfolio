@@ -45,6 +45,14 @@ const typeOptions = ["form.o1", "form.o2", "form.o3", "form.o4", "form.o5"] as c
       <p class="sr" id="formStatus" role="status" aria-live="polite"></p>
       <div class="form-ok" id="formOk" role="status" data-i18n="form.ok" data-od-id="form-success">{t("form.ok")}</div>
       <button class="btn btn-lime w-full" type="submit" data-i18n="form.send" data-od-id="form-submit">{t("form.send")}</button>
+      <a
+        class="btn w-full mt-2"
+        id="mailtoFallback"
+        hidden
+        data-i18n="form.fallback"
+        data-od-id="form-fallback"
+        href="mailto:ariellazaro444@gmail.com"
+      >{t("form.fallback")}</a>
     </form>
 
     <div class="preview" data-od-id="issue-preview-wrap">
