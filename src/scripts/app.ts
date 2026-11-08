@@ -252,7 +252,6 @@ const form = document.getElementById("contactForm") as HTMLFormElement | null;
 const nameEl = document.getElementById("fName") as HTMLInputElement | null;
 const emailEl = document.getElementById("fEmail") as HTMLInputElement | null;
 const msgEl = document.getElementById("fMsg") as HTMLTextAreaElement | null;
-const typeEl = document.getElementById("fType") as HTMLSelectElement | null;
 const okBox = document.getElementById("formOk");
 const formStatus = document.getElementById("formStatus");
 const fallbackEl = document.getElementById("mailtoFallback") as HTMLAnchorElement | null;
@@ -277,12 +276,11 @@ function resetSubmit(): void {
 
 /** On send failure: arm a pre-filled mailto: so nothing typed is lost. */
 function showFallback(): void {
-  if (!fallbackEl || !nameEl || !emailEl || !msgEl || !typeEl) return;
+  if (!fallbackEl || !nameEl || !emailEl || !msgEl) return;
   const body = [
     msgEl.value.trim(),
     "",
     "Reply to: " + emailEl.value.trim(),
-    "Type: " + typeEl.value,
   ].join("\n");
   fallbackEl.href = "mailto:" + CONTACT_EMAIL
     + "?subject=" + encodeURIComponent("Portfolio contact - " + nameEl.value.trim())
@@ -297,21 +295,18 @@ function hideFallback(): void {
 function renderPreview(): void {
   const pvTitle = document.getElementById("pvTitle");
   const pvBody = document.getElementById("pvBody");
-  const pvLabel = document.getElementById("pvLabel");
-  if (!pvTitle || !pvBody || !pvLabel || !nameEl) return;
-  pvLabel.textContent = typeEl?.value ?? "";
+  if (!pvTitle || !pvBody || !nameEl) return;
   pvTitle.textContent = t("form.pvFrom") + " " + (nameEl.value.trim() || "Your name");
   pvBody.textContent = (msgEl?.value.trim() || t("form.pvBody")) + " - " + (emailEl?.value.trim() || "you@example.com");
 }
 
-if (form && nameEl && emailEl && msgEl && typeEl) {
+if (form && nameEl && emailEl && msgEl) {
   rules.forEach(([field, errorId, valid]) => {
     field.addEventListener("input", () => {
       if (field.getAttribute("aria-invalid") === "true") flagField(field, errorId, !valid(field.value));
     });
   });
   [nameEl, emailEl, msgEl].forEach((el) => el.addEventListener("input", renderPreview));
-  typeEl.addEventListener("change", renderPreview);
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -347,7 +342,6 @@ if (form && nameEl && emailEl && msgEl && typeEl) {
         body: JSON.stringify({
           name: nameEl.value.trim(),
           email: emailEl.value.trim(),
-          type: typeEl.value,
           message: msgEl.value.trim(),
           _replyto: emailEl.value.trim(),
           _subject: `Portfolio contact - ${nameEl.value.trim()}`,

@@ -71,7 +71,7 @@ export const I18N: Record<Lang, Record<string, string>> = {
     "contact.eyebrow": "06 · Contact", "contact.h2a": "Your next build", "contact.h2b": "starts here.",
     "contact.blurb": "Tell me about your project. I reply within 24 h.",
     "form.name": "Your name", "form.nameErr": "Add your name.", "form.email": "Contact email", "form.emailErr": "That email looks off.",
-    "form.type": "What do you need?", "form.o1": "full-slice: api + web + mobile", "form.o2": "backend: .NET / C#", "form.o3": "frontend: Angular", "form.o4": "mobile: Flutter", "form.o5": "other",
+
     "form.msg": "About your project", "form.msgErr": "20+ chars so I can help.", "form.phMsg": "What? Stack today? Ship date?",
     "form.send": "Send message →", "form.sending": "Sending…", "form.sent": "Sent ✓ — talk soon", "form.fix": "Please fix the highlighted fields.",
     "form.ok": "✓ Message sent — I’ll reply within 24 h.",
@@ -146,7 +146,7 @@ export const I18N: Record<Lang, Record<string, string>> = {
     "contact.eyebrow": "06 · Contacto", "contact.h2a": "Tu próximo build", "contact.h2b": "empieza acá.",
     "contact.blurb": "Contame de tu proyecto. Respondo en menos de 24 h.",
     "form.name": "Tu nombre", "form.nameErr": "Escribí tu nombre.", "form.email": "Email de contacto", "form.emailErr": "Ese email no parece válido.",
-    "form.type": "¿Qué necesitás?", "form.o1": "full-slice: api + web + móvil", "form.o2": "backend: .NET / C#", "form.o3": "frontend: Angular", "form.o4": "mobile: Flutter", "form.o5": "otro",
+
     "form.msg": "Sobre tu proyecto", "form.msgErr": "20+ caracteres para poder ayudarte.", "form.phMsg": "¿Qué? ¿Stack actual? ¿Fecha de entrega?",
     "form.send": "Enviar mensaje →", "form.sending": "Enviando…", "form.sent": "Enviado ✓ — hablamos", "form.fix": "Revisá los campos marcados.",
     "form.ok": "✓ Mensaje enviado — respondo en menos de 24 h.",
