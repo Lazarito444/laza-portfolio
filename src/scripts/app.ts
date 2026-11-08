@@ -281,7 +281,7 @@ function renderPreview(): void {
   if (!pvTitle || !pvBody || !pvLabel || !nameEl) return;
   pvLabel.textContent = typeEl?.value ?? "";
   pvTitle.textContent = t("form.pvFrom") + " " + (nameEl.value.trim() || "Your name");
-  pvBody.textContent = (msgEl?.value.trim() || t("form.pvBody")) + " â€” " + (emailEl?.value.trim() || "you@example.com");
+  pvBody.textContent = (msgEl?.value.trim() || t("form.pvBody")) + " - " + (emailEl?.value.trim() || "you@example.com");
 }
 
 if (form && nameEl && emailEl && msgEl && typeEl) {
@@ -319,7 +319,9 @@ if (form && nameEl && emailEl && msgEl && typeEl) {
       const res = await fetch(FORM_ENDPOINT, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          // Explicit UTF-8: Formspree's mail rendering otherwise decodes
+          // non-ASCII (em dashes, accents) as Windows-1252 mojibake.
+          "Content-Type": "application/json; charset=utf-8",
           Accept: "application/json",
         },
         body: JSON.stringify({
@@ -328,7 +330,7 @@ if (form && nameEl && emailEl && msgEl && typeEl) {
           type: typeEl.value,
           message: msgEl.value.trim(),
           _replyto: emailEl.value.trim(),
-          _subject: `Portfolio contact â€” ${nameEl.value.trim()}`,
+          _subject: `Portfolio contact - ${nameEl.value.trim()}`,
         }),
       });
       if (res.ok) {
