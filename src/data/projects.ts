@@ -7,77 +7,85 @@ export interface Project {
   /** Space-separated filter lanes the project belongs to. */
   lanes: string;
   pillKey: string;
-  /** Renders the "live in prod" accent pill. */
+  /** Renders the "latest" accent pill. */
   live?: boolean;
   titleKey: string;
   descKey: string;
   linkKey: string;
+  /** Real public repo URL the card links to. */
+  link: string;
   tags: string[];
-  /** Optional label above the terminal shot, e.g. FILE_01 / billing. */
+  /** Optional label above the terminal shot, e.g. FILE_01 / seasonpal. */
   sideFile?: string;
   /** Terminal-style proof lines shown in the case side panel. */
   shot: string[];
   noteKey?: string;
 }
 
+export const GH = "https://github.com/Lazarito444";
+
 export const projects: Project[] = [
   {
-    id: "project-ledger",
+    id: "project-seasonpal",
     featured: true,
-    lanes: "backend cloud",
+    lanes: "mobile frontend",
     pillKey: "p1.pill",
     live: true,
     titleKey: "p1.title",
     descKey: "p1.desc",
     linkKey: "p1.link",
-    tags: ["C# .NET 8", "Go", "Postgres", "Terraform"],
-    sideFile: "FILE_01 / billing",
+    link: `${GH}/SeasonPal`,
+    tags: ["Flutter", "Dart", "AI"],
+    sideFile: "FILE_01 / seasonpal",
     shot: [
-      "POST /v1/invoices → 201 · p95 84ms",
-      "412 msgs · 0 retries",
+      "flutter · dart",
+      "recipes · collections · community",
     ],
     noteKey: "p1.note",
   },
   {
-    id: "project-dispatch",
+    id: "project-aroel",
     num: "02",
     lanes: "frontend backend",
     pillKey: "p2.pill",
     titleKey: "p2.title",
     descKey: "p2.desc",
     linkKey: "p2.link",
-    tags: ["Angular 18", "SignalR", "gRPC"],
+    link: `${GH}/Aroel`,
+    tags: ["C#", ".NET"],
     shot: [
-      "ng test — 212 passed",
-      "AA · keyboard-first",
+      "docs/scope-and-design.md",
+      "warm-paper design system",
     ],
   },
   {
-    id: "project-fieldkit",
+    id: "project-questify",
     num: "03",
     lanes: "mobile backend",
     pillKey: "p3.pill",
     titleKey: "p3.title",
     descKey: "p3.desc",
     linkKey: "p3.link",
-    tags: ["Flutter", "Riverpod", "FCM"],
+    link: `${GH}/Questify`,
+    tags: ["Flutter", "Drift", "Riverpod"],
     shot: [
-      "28.4 MB · 60fps",
-      "LWW + tombstones",
+      "clean architecture + DDD",
+      "offline-first · sqlite ledger",
     ],
   },
   {
-    id: "project-platform",
+    id: "project-expenselab",
     num: "04",
-    lanes: "cloud backend",
+    lanes: "mobile",
     pillKey: "p4.pill",
     titleKey: "p4.title",
     descKey: "p4.desc",
     linkKey: "p4.link",
-    tags: ["Azure · GCP", "Terraform", "Actions"],
+    link: `${GH}/ExpenseLab`,
+    tags: ["Flutter", "Dart"],
     shot: [
-      "plan: 12 add · 0 destroy",
-      "rev 42 · 0-downtime",
+      "// focus",
+      "visual clarity · insights",
     ],
   },
 ];

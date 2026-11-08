@@ -46,7 +46,7 @@ const filterKey = (f: string) => `projects.f${f.charAt(0).toUpperCase()}${f.slic
           </div>
 
           <p class={p.featured ? "mt-3" : "mt-2.5"}>
-            <a class="link-btn" href="#contact" data-i18n={p.linkKey} data-od-id={`${p.id}-case`}>{t(p.linkKey)}</a>
+            <a class="link-btn" href={p.link} target="_blank" rel="noopener" data-i18n={p.linkKey} data-od-id={`${p.id}-case`}>{t(p.linkKey)}</a>
           </p>
         </div>
 

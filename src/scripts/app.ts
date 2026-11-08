@@ -1,8 +1,9 @@
-/**
+﻿/**
  * Client behavior for the single-page portfolio: theme switching, EN/ES
  * text swapping, mobile menu, project filters, stack tabs, copy buttons,
- * the demo contact form with live issue preview, the decorative activity
- * grid, reveal-on-scroll, section scroll-spy and the footer clock.
+ * the contact form with live issue preview, the decorative activity
+ * grid, reveal-on-scroll, section scroll-spy and the footer clock. The
+ * contact form posts JSON to a Formspree endpoint.
  *
  * Markup carries `data-i18n` / `data-i18n-ph` / `data-i18n-aria` keys;
  * this module swaps their values in place, mirroring the dictionary
@@ -11,6 +12,8 @@
 import { I18N, type Lang } from "../data/i18n";
 
 const CONTACT_EMAIL = "ariellazaro444@gmail.com";
+/** Formspree endpoint (e.g. https://formspree.io/f/abcdwxyz); replaced at setup. */
+const FORM_ENDPOINT = "https://formspree.io/f/xqpporel";
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const root = document.documentElement;
@@ -277,8 +280,8 @@ function renderPreview(): void {
   const pvLabel = document.getElementById("pvLabel");
   if (!pvTitle || !pvBody || !pvLabel || !nameEl) return;
   pvLabel.textContent = typeEl?.value ?? "";
-  pvTitle.textContent = t("form.pvFrom") + " " + (nameEl.value.trim() || "Ada Lovelace");
-  pvBody.textContent = (msgEl?.value.trim() || t("form.pvBody")) + " — " + (emailEl?.value.trim() || "ada@company.com");
+  pvTitle.textContent = t("form.pvFrom") + " " + (nameEl.value.trim() || "Your name");
+  pvBody.textContent = (msgEl?.value.trim() || t("form.pvBody")) + " â€” " + (emailEl?.value.trim() || "you@example.com");
 }
 
 if (form && nameEl && emailEl && msgEl && typeEl) {
@@ -290,7 +293,7 @@ if (form && nameEl && emailEl && msgEl && typeEl) {
   [nameEl, emailEl, msgEl].forEach((el) => el.addEventListener("input", renderPreview));
   typeEl.addEventListener("change", renderPreview);
 
-  form.addEventListener("submit", (e) => {
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
     let firstBad: HTMLInputElement | HTMLTextAreaElement | null = null;
     rules.forEach(([field, errorId, valid]) => {
@@ -310,16 +313,41 @@ if (form && nameEl && emailEl && msgEl && typeEl) {
       submitBtn.setAttribute("aria-busy", "true");
       submitBtn.textContent = t("form.sending");
     }
-    // Demo only: simulate a round-trip, then confirm.
-    setTimeout(() => {
+    // Submit to the configured form endpoint (Formspree). Formspree answers
+    // `application/json` when requested, so errors surface as JSON too.
+    try {
+      const res = await fetch(FORM_ENDPOINT, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          name: nameEl.value.trim(),
+          email: emailEl.value.trim(),
+          type: typeEl.value,
+          message: msgEl.value.trim(),
+          _replyto: emailEl.value.trim(),
+          _subject: `Portfolio contact â€” ${nameEl.value.trim()}`,
+        }),
+      });
+      if (res.ok) {
+        sent = true;
+        resetSubmit();
+        if (okBox) okBox.style.display = "block";
+      } else {
+        const data = await res.json().catch(() => null);
+        console.error("Form submission failed:", data);
+        if (formStatus) formStatus.textContent = t("form.fail");
+      }
+    } catch {
+      if (formStatus) formStatus.textContent = t("form.fail");
+    } finally {
       if (submitBtn) {
         submitBtn.disabled = false;
         submitBtn.removeAttribute("aria-busy");
       }
-      sent = true;
-      resetSubmit();
-      if (okBox) okBox.style.display = "block";
-    }, 900);
+    }
   });
 
   renderPreview();

@@ -19,13 +19,13 @@ const typeOptions = ["form.o1", "form.o2", "form.o3", "form.o4", "form.o5"] as c
     <form class="form" id="contactForm" novalidate data-od-id="contact-form">
       <label for="fName">
         <span data-i18n="form.name">{t("form.name")}</span>
-        <input id="fName" name="name" autocomplete="name" placeholder="Ada Lovelace" aria-describedby="eName" data-od-id="field-name" />
+        <input id="fName" name="name" autocomplete="name" placeholder="Your name" aria-describedby="eName" data-od-id="field-name" />
         <span class="err" id="eName" data-i18n="form.nameErr">{t("form.nameErr")}</span>
       </label>
 
       <label for="fEmail">
         <span data-i18n="form.email">{t("form.email")}</span>
-        <input id="fEmail" name="email" type="email" inputmode="email" autocomplete="email" placeholder="ada@company.com" aria-describedby="eEmail" data-od-id="field-email" />
+        <input id="fEmail" name="email" type="email" inputmode="email" autocomplete="email" placeholder="you@example.com" aria-describedby="eEmail" data-od-id="field-email" />
         <span class="err" id="eEmail" data-i18n="form.emailErr">{t("form.emailErr")}</span>
       </label>
 
@@ -51,10 +51,12 @@ const typeOptions = ["form.o1", "form.o2", "form.o3", "form.o4", "form.o5"] as c
       <span class="eyebrow" data-i18n="form.pvTitle">{t("form.pvTitle")}</span>
       <div class="issue mt-3 rounded-xl p-4" data-od-id="issue-preview">
         <span class="pill" id="pvLabel">full-slice: api + web + mobile</span>
-        <h3 id="pvTitle" class="my-2">Message from Ada Lovelace</h3>
+        <h3 id="pvTitle" class="my-2">Message from you</h3>
         <p id="pvBody" class="muted text-[13.5px]">What? Stack today? Ship date? — type left, watch it render here.</p>
         <div class="meta">
           <a href="mailto:ariellazaro444@gmail.com">ariellazaro444@gmail.com</a>
+          <span aria-hidden="true">·</span>
+          <a href="tel:+18099993911">+1 (809) 999-3911</a>
           <span aria-hidden="true">·</span>
           <button class="copy-btn m-0 min-h-8 px-2.5 py-1.5" id="copyBtn2" type="button" data-copy-key="form.copy" data-i18n="form.copy" data-od-id="contact-copy-btn">{t("form.copy")}</button>
           <span aria-hidden="true">·</span>

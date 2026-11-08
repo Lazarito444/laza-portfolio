@@ -29,14 +29,14 @@ const t = en;
 
     <div class="repos">
       {repos.map((r) => (
-        <div class="repo reveal" data-od-id={r.id}>
+        <a class="repo reveal" href={r.url} target="_blank" rel="noopener" data-od-id={r.id}>
           <div class="repo-top">
             <h3>{r.name}</h3>
             <span class="pill" data-i18n={r.pillKey}>{t(r.pillKey)}</span>
           </div>
           <p data-i18n={r.descKey}>{t(r.descKey)}</p>
           <div class="langdot"><i style={`background:${r.color}`} aria-hidden="true"></i>{r.lang} · <span data-i18n={r.noteKey}>{t(r.noteKey)}</span></div>
-        </div>
+        </a>
       ))}
     </div>
   </div>

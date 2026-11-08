@@ -32,29 +32,37 @@ const t = en;
 
   <div class="fileview" data-od-id="stack-viewer">
     <div class="filetabs" role="tablist" data-i18n-aria="stack.tabs" aria-label={t("stack.tabs")} data-od-id="stack-tabs">
-      <button type="button" role="tab" id="tabDotnet" aria-selected="true" aria-controls="paneDotnet" tabindex="0" data-tab="dotnet" data-od-id="tab-dotnet">billing.csproj</button>
-      <button type="button" role="tab" id="tabGo" aria-selected="false" aria-controls="paneGo" tabindex="-1" data-tab="go" data-od-id="tab-go">go.mod</button>
-      <button type="button" role="tab" id="tabNg" aria-selected="false" aria-controls="paneNg" tabindex="-1" data-tab="ng" data-od-id="tab-ng">invoices.component.ts</button>
-      <button type="button" role="tab" id="tabFl" aria-selected="false" aria-controls="paneFl" tabindex="-1" data-tab="fl" data-od-id="tab-fl">pubspec.yaml</button>
-      <button type="button" role="tab" id="tabTf" aria-selected="false" aria-controls="paneTf" tabindex="-1" data-tab="tf" data-od-id="tab-tf">main.tf</button>
+      <button type="button" role="tab" id="tabDotnet" aria-selected="true" aria-controls="paneDotnet" tabindex="0" data-tab="dotnet" data-od-id="tab-dotnet">Program.cs</button>
+      <button type="button" role="tab" id="tabGo" aria-selected="false" aria-controls="paneGo" tabindex="-1" data-tab="go" data-od-id="tab-go">pubspec.yaml</button>
+      <button type="button" role="tab" id="tabNg" aria-selected="false" aria-controls="paneNg" tabindex="-1" data-tab="ng" data-od-id="tab-ng">scope-and-design.md</button>
+      <button type="button" role="tab" id="tabFl" aria-selected="false" aria-controls="paneFl" tabindex="-1" data-tab="fl" data-od-id="tab-fl">pubspec-questify.yaml</button>
+      <button type="button" role="tab" id="tabTf" aria-selected="false" aria-controls="paneTf" tabindex="-1" data-tab="tf" data-od-id="tab-tf">astro.config.mjs</button>
     </div>
 
     <div class="codepane active" role="tabpanel" id="paneDotnet" aria-labelledby="tabDotnet" tabindex="0" data-pane="dotnet">
-      <span class="t-dim">&lt;!-- EF Core · MassTransit --&gt;</span><br />
-      <span class="t-cyan">&lt;PackageReference</span> Include="Microsoft.EntityFrameworkCore" Version="8.0.*" /<span class="t-cyan">&gt;</span><br />
-      outbox → worker → idempotent handler
+      <span class="t-cyan">app.MapPost</span>(<span class="t-lime">"/api/items"</span>, async (ItemDto dto, InventoryDbContext db) =&gt;<br />
+      &#123; db.Items.Add(<span class="t-cyan">new</span> Item(dto)); <span class="t-cyan">await</span> db.SaveChangesAsync(); <span class="t-cyan">return</span> Results.Created(); &#125;)
     </div>
     <div class="codepane" role="tabpanel" id="paneGo" aria-labelledby="tabGo" tabindex="0" data-pane="go" hidden>
-      module ledger/worker<br />require github.com/jackc/pgx/v5 <span class="t-lime">v5.5.0</span> <span class="t-dim">// p95 84ms</span>
+      <span class="t-cyan">name:</span> seasonpal<br />
+      dependencies:<br />
+      &nbsp;&nbsp;flutter_riverpod: <span class="t-lime">^2.4.0</span> &nbsp;# state<br />
+      &nbsp;&nbsp;dio: <span class="t-lime">^5.4.0</span> &nbsp;# api
     </div>
     <div class="codepane" role="tabpanel" id="paneNg" aria-labelledby="tabNg" tabindex="0" data-pane="ng" hidden>
-      <span class="t-cyan">export class</span> InvoicesComponent &#123; invoices = <span class="t-cyan">signal</span>([]) &#125; <span class="t-dim">// no any</span>
+      <span class="t-lime"># Aroel — scope &amp; design</span><br />
+      warm-paper design system<br />
+      v1 scope · domain model · screens · milestones
     </div>
     <div class="codepane" role="tabpanel" id="paneFl" aria-labelledby="tabFl" tabindex="0" data-pane="fl" hidden>
-      flutter_riverpod: <span class="t-lime">^2.4.0</span> <span class="t-dim"># offline queue</span>
+      dependencies:<br />
+      &nbsp;&nbsp;drift: <span class="t-lime">^2.18.0</span> <span class="t-dim"># sqlite ledger</span><br />
+      &nbsp;&nbsp;flutter_riverpod: <span class="t-lime">^2.4.0</span> <span class="t-dim"># clean architecture + DDD</span>
     </div>
     <div class="codepane" role="tabpanel" id="paneTf" aria-labelledby="tabTf" tabindex="0" data-pane="tf" hidden>
-      module "preview_env" &#123; ttl = <span class="t-lime">"48h"</span> &#125; <span class="t-dim"># destroyed on merge</span>
+      <span class="t-cyan">export default</span> defineConfig(&#123;<br />
+      &nbsp;&nbsp;integrations: [tailwindcss()]<br />
+      &#125;); <span class="t-dim">// this very site</span>
     </div>
   </div>
 </section>
