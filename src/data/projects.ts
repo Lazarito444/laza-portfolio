@@ -19,6 +19,8 @@ export interface Project {
   sideFile?: string;
   /** Terminal-style proof lines shown in the case side panel. */
   shot: string[];
+  /** Real product screenshots shown instead of the terminal lines. */
+  screens?: { src: string; alt: string; width: number; height: number }[];
   noteKey?: string;
 }
 
@@ -40,6 +42,10 @@ export const projects: Project[] = [
     shot: [
       "flutter · dart",
       "recipes · collections · community",
+    ],
+    screens: [
+      { src: "assets/seasonpal-home.jpg", alt: "SeasonPal home screen with today's seasonal recipes", width: 487, height: 1988 },
+      { src: "assets/seasonpal-search.jpg", alt: "SeasonPal search screen with pantry-matched recipe results", width: 487, height: 2250 },
     ],
     noteKey: "p1.note",
   },

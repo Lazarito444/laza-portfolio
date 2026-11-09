@@ -10,7 +10,6 @@ const filterKey = (f: string) => `projects.f${f.charAt(0).toUpperCase()}${f.slic
 <section class="sec" id="projects">
   <div class="sec-top">
     <div data-od-id="work-heading">
-      <span class="eyebrow" data-i18n="projects.eyebrow">{t("projects.eyebrow")}</span>
       <h2><span data-i18n="projects.h2a">{t("projects.h2a")}</span> <em data-i18n="projects.h2b">{t("projects.h2b")}</em></h2>
       <p data-i18n="projects.blurb">{t("projects.blurb")}</p>
     </div>
@@ -52,7 +51,15 @@ const filterKey = (f: string) => `projects.f${f.charAt(0).toUpperCase()}${f.slic
 
         <div class="case-side">
           {p.sideFile ? <div>{p.sideFile}</div> : null}
-          <div class="shot" set:html={p.shot.join("<br/>")} />
+          {p.screens ? (
+            <div class="shots">
+              {p.screens.map((s) => (
+                <img src={s.src} alt={s.alt} width={s.width} height={s.height} loading="lazy" />
+              ))}
+            </div>
+          ) : (
+            <div class="shot" set:html={p.shot.join("<br/>")} />
+          )}
           {p.noteKey ? <div class="muted" data-i18n={p.noteKey}>{t(p.noteKey)}</div> : null}
         </div>
       </article>

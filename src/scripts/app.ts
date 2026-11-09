@@ -296,8 +296,8 @@ function renderPreview(): void {
   const pvTitle = document.getElementById("pvTitle");
   const pvBody = document.getElementById("pvBody");
   if (!pvTitle || !pvBody || !nameEl) return;
-  pvTitle.textContent = t("form.pvFrom") + " " + (nameEl.value.trim() || "Your name");
-  pvBody.textContent = (msgEl?.value.trim() || t("form.pvBody")) + " - " + (emailEl?.value.trim() || "you@example.com");
+  pvTitle.textContent = t("form.pvFrom") + " " + (nameEl.value.trim() || t("form.pvAnon"));
+  pvBody.textContent = (msgEl?.value.trim() || t("form.pvBody")) + " - " + (emailEl?.value.trim() || t("form.phEmail"));
 }
 
 if (form && nameEl && emailEl && msgEl) {

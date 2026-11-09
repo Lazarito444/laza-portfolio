@@ -8,25 +8,24 @@ const t = en;
 <section class="sec" id="about">
   <div class="sec-top">
     <div data-od-id="about-heading">
-      <span class="eyebrow" data-i18n="about.eyebrow">{t("about.eyebrow")}</span>
       <h2><span data-i18n="about.h2a">{t("about.h2a")}</span> <em data-i18n="about.h2b">{t("about.h2b")}</em></h2>
     </div>
   </div>
 
   <div class="about-grid">
     <div class="id-card reveal" data-od-id="about-card">
+      <div class="id-photo" data-od-id="about-photo" role="img" aria-label="Portrait of Ariel Lázaro">
+        <span class="id-ph-glyph" aria-hidden="true">L_</span>
+        <!-- Fallback: guarantees the placeholder shows even if the image
+             404s before app.ts attaches its error listener. -->
+        <img id="photoImg" src="assets/photo.jpg" alt="" width="460" height="460" loading="lazy" onerror="this.style.display = 'none'" />
+      </div>
       <div class="id-top">
         <div class="id-row">
           <div class="id-text">
             <span class="mono small" data-i18n="about.idbadge">{t("about.idbadge")}</span>
             <b>Ariel Lázaro</b>
             <span class="mono small" data-i18n="about.loc">{t("about.loc")}</span>
-          </div>
-          <div class="id-photo" data-od-id="about-photo" role="img" aria-label="Portrait of Ariel Lázaro">
-            <span class="id-ph-glyph" aria-hidden="true">L_</span>
-            <!-- Fallback: guarantees the placeholder shows even if the image
-                 404s before app.ts attaches its error listener. -->
-            <img id="photoImg" src="assets/photo.jpg" alt="" onerror="this.style.display = 'none'" />
           </div>
         </div>
       </div>

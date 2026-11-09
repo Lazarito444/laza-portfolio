@@ -7,7 +7,7 @@
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
 @theme {
-  --font-display: "Space Grotesk", "Söhne", "Avenir Next", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --font-display: "Bricolage Grotesque", "Söhne", "Avenir Next", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
   --font-body: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
   --font-serif: "Iowan Old Style", Georgia, "Times New Roman", serif;
   --font-mono: "IBM Plex Mono", "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
@@ -564,12 +564,10 @@ html[data-theme="light"] {
   }
   .id-photo {
     position: relative;
-    width: 78px;
-    height: 78px;
-    flex: none;
-    border-radius: 10px;
-    border: 1.5px dashed color-mix(in oklab, var(--accent-ink) 45%, transparent);
-    background: color-mix(in oklab, var(--accent-ink) 9%, transparent);
+    width: 100%;
+    aspect-ratio: 1;
+    border-bottom: 1px solid var(--border);
+    background: var(--sunken);
     display: grid;
     place-items: center;
     overflow: hidden;
@@ -580,7 +578,6 @@ html[data-theme="light"] {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 9px;
   }
   .id-ph-glyph {
     font-family: var(--font-mono);
@@ -778,6 +775,21 @@ html[data-theme="light"] {
     overflow-x: auto;
     white-space: nowrap;
     font-family: var(--font-mono);
+  }
+  .shots {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .shots img {
+    width: 100%;
+    height: 340px;
+    object-fit: cover;
+    object-position: top center;
+    display: block;
+    border: 1px solid var(--border-strong);
+    border-radius: 10px;
+    background: var(--sunken);
   }
   .empty {
     border: 1px dashed var(--border-strong);
